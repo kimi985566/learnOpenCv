@@ -62,7 +62,7 @@ public class ProcessActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_process:
-                RGB2Gray();
+                select2Process();
                 break;
             case R.id.btn_select:
                 Intent pickIntent = new Intent(Intent.ACTION_PICK,
@@ -75,12 +75,14 @@ public class ProcessActivity extends AppCompatActivity {
         }
     }
 
-    private void RGB2Gray() {
+    private void select2Process() {
         Bitmap temp = mBitmap.copy(mBitmap.getConfig(), true);
         if (OpenCVConstants.GRAY_TEST_NAME.equals(processName)) {
             temp = ImageProcessUtils.covert2Gray(temp);
-        } else if (OpenCVConstants.PIXEL_INVERT_NAME.equals(processName)) {
+        } else if (OpenCVConstants.MAT_PIXEL_INVERT_NAME.equals(processName)) {
             temp = ImageProcessUtils.invertMat(temp);
+        } else if (OpenCVConstants.BITMAP_PIXEL_INVERT_NAME.equals(processName)) {
+            temp = ImageProcessUtils.invertBitmap(temp);
         }
         mIvProcess.setImageBitmap(temp);
     }
