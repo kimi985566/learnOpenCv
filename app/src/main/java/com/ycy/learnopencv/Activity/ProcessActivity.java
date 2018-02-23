@@ -13,10 +13,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.blankj.utilcode.util.Utils;
+import com.ycy.learnopencv.Bean.OpenCVConstants;
 import com.ycy.learnopencv.R;
-
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
+import com.ycy.learnopencv.Utils.ImageProcessUtils;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -39,6 +38,7 @@ public class ProcessActivity extends AppCompatActivity {
     private Bitmap mBitmap;
     public static final int SELECT_PIC_RESULT_CODE = 202;
     private int maxSize = 1024;
+    private String processName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +46,14 @@ public class ProcessActivity extends AppCompatActivity {
         setContentView(R.layout.activity_process);
         ButterKnife.bind(this);
         Utils.init(this);
-        String btn_name = this.getIntent().getStringExtra("name");
-        mBtnProcess.setText(btn_name);
+        processName = this.getIntent().getStringExtra("name");
+        mBtnProcess.setText(processName);
+        actionBarSetting();
+    }
+
+    private void actionBarSetting() {
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(btn_name);
+        getSupportActionBar().setTitle(processName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }
@@ -72,14 +76,23 @@ public class ProcessActivity extends AppCompatActivity {
     }
 
     private void RGB2Gray() {
-        Mat src = new Mat();
-        Mat dst = new Mat();
         Bitmap temp = mBitmap.copy(mBitmap.getConfig(), true);
-        org.opencv.android.Utils.bitmapToMat(temp, src);
-        Imgproc.cvtColor(src, dst, Imgproc.COLOR_BGRA2GRAY);
-        org.opencv.android.Utils.matToBitmap(dst, temp);
+        if (OpenCVConstants.GRAY_TEST_NAME.equals(processName)) {
+            temp = ImageProcessUtils.covert2Gray(temp);
+        } else if (OpenCVConstants.PIXEL_INVERT_NAME.equals(processName)) {
+            temp = ImageProcessUtils.invertMat(temp);
+        }
         mIvProcess.setImageBitmap(temp);
     }
+
+    /**
+     * ARGB_8888：
+     * A->8bit->一个字节，
+     * R->8bit->一个字节，
+     * G->8bit->一个字节，
+     * B->8bit->一个字节，
+     * 即8888，一个像素总共占四个字节，8+8+8+8=32bit=8byte
+     */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -91,10 +104,12 @@ public class ProcessActivity extends AppCompatActivity {
             try {
                 InputStream inputStream = getContentResolver().openInputStream(uri);
                 BitmapFactory.decodeStream(inputStream, null, options);
+
                 int height = options.outHeight;
                 int width = options.outWidth;
                 int sampleSize = 1;
                 int max = Math.max(height, width);
+
                 if (max > maxSize) {
                     int nw = width / 2;
                     int nh = height / 2;
@@ -102,11 +117,15 @@ public class ProcessActivity extends AppCompatActivity {
                         sampleSize *= 2;
                     }
                 }
+
                 options.inSampleSize = sampleSize;
                 options.inJustDecodeBounds = false;
+                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+
                 mBitmap = BitmapFactory.decodeStream(getContentResolver().
                         openInputStream(uri), null, options);
                 mIvProcess.setImageBitmap(mBitmap);
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -114,3 +133,5 @@ public class ProcessActivity extends AppCompatActivity {
         }
     }
 }
+
+

@@ -1091,7 +1091,7 @@ public class Mat {
     }
 
     // javadoc:Mat::get(row,col)
-    public double[] get(int row, int col) {
+    public double[] get(int row, int col, Byte[] bgra) {
         return nGet(nativeObj, row, col);
     }
 

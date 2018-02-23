@@ -77,11 +77,15 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
             mItem_cmd = openCVInfo.getCommend();
         }
         processIntent();
-
     }
 
     private void processIntent() {
         if (OpenCVConstants.GRAY_TEST_NAME.equals(mItem_name)) {
+            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
+            intent.putExtra("commend", mItem_cmd);
+            intent.putExtra("name", mItem_name);
+            startActivity(intent);
+        } else if (OpenCVConstants.PIXEL_INVERT_NAME.equals(mItem_name)) {
             Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
             intent.putExtra("commend", mItem_cmd);
             intent.putExtra("name", mItem_name);
