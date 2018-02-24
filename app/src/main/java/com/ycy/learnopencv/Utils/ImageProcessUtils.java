@@ -3,6 +3,7 @@ package com.ycy.learnopencv.Utils;
 import android.graphics.Bitmap;
 
 import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
@@ -99,11 +100,17 @@ public class ImageProcessUtils {
 
     public static void contrast_ratio_adjust(Bitmap bitmap) {
         org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
-        Mat whiteImage = new Mat(sSrc.size(), sSrc.type(), Scalar.all(2));//Contrast Ratio
+        //This operation enables you to adjust CM in a float number.
+        sSrc.convertTo(sSrc, CvType.CV_32F);
+        Mat whiteImage = new Mat(sSrc.size(), sSrc.type(), Scalar.all(1.25));//Contrast Ratio
         Mat bwImage = new Mat(sSrc.size(), sSrc.type(), Scalar.all(30));//Brightness+30
         Core.multiply(whiteImage, sSrc, sSrc);
         Core.add(bwImage, sSrc, sSrc);
+        sSrc.convertTo(sSrc, CvType.CV_8U);
         org.opencv.android.Utils.matToBitmap(sSrc, bitmap);
+        //Don't forget to release.
+        bwImage.release();
+        whiteImage.release();
         sSrc.release();
     }
 }

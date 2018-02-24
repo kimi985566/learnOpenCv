@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.ycy.learnopencv">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,6 +23,14 @@
 
         <activity
             android:name=".Activity.ProcessActivity"
+            android:parentActivityName=".Activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activity.MainActivity"/>
+        </activity>
+
+        <activity
+            android:name=".Activity.AboutMeActivity"
             android:parentActivityName=".Activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

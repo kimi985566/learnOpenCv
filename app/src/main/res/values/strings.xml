@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">learnOpenCv</string>
+    <string name="action_aboutMe">About Me</string>
+    <string name="tv_aboutMe_title">Chengyu Yang</string>
 </resources>
