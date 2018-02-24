@@ -83,7 +83,7 @@ public class ProcessActivity extends AppCompatActivity {
             temp = ImageProcessUtils.invertMat(temp);
         } else if (OpenCVConstants.BITMAP_PIXEL_INVERT_NAME.equals(processName)) {
             temp = ImageProcessUtils.invertBitmap(temp);
-        } else if (OpenCVConstants.CONTRAST_RATIO_NAME.equals(processName)) {
+        } else if (OpenCVConstants.CONTRAST_RATIO_BRIGHTNESS_NAME.equals(processName)) {
             ImageProcessUtils.contrast_ratio_adjust(temp);
         }
         mIvProcess.setImageBitmap(temp);

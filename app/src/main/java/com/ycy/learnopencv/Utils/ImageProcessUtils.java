@@ -30,7 +30,7 @@ public class ImageProcessUtils {
     private static int sPixel = 0;
 
     public static Bitmap covert2Gray(Bitmap bitmap) {
-        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);//转换图像为Mat
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);//convert Bitmap to mat
         Imgproc.cvtColor(sSrc, sDst, Imgproc.COLOR_BGRA2GRAY);
         org.opencv.android.Utils.matToBitmap(sDst, bitmap);
         sSrc.release();
@@ -43,11 +43,11 @@ public class ImageProcessUtils {
         org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
 
         //pixel operation
-        //宽
+        //width of mat
         sWidth = sSrc.cols();
-        //高
+        //height of mat
         sHeight = sSrc.rows();
-        int cnum = sSrc.channels();//获取通道
+        int cnum = sSrc.channels();//Get channel
 
         byte[] bgra = new byte[cnum];//ARGB(Bitmap)-->BGRA(mat)
 
@@ -99,8 +99,8 @@ public class ImageProcessUtils {
 
     public static void contrast_ratio_adjust(Bitmap bitmap) {
         org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
-        Mat whiteImage = new Mat(sSrc.size(), sSrc.type(), Scalar.all(2));//对比度两倍
-        Mat bwImage = new Mat(sSrc.size(), sSrc.type(), Scalar.all(30));//亮度+30
+        Mat whiteImage = new Mat(sSrc.size(), sSrc.type(), Scalar.all(2));//Contrast Ratio
+        Mat bwImage = new Mat(sSrc.size(), sSrc.type(), Scalar.all(30));//Brightness+30
         Core.multiply(whiteImage, sSrc, sSrc);
         Core.add(bwImage, sSrc, sSrc);
         org.opencv.android.Utils.matToBitmap(sSrc, bitmap);

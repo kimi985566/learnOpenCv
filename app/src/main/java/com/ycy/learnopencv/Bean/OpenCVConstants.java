@@ -6,15 +6,15 @@ package com.ycy.learnopencv.Bean;
 
 public class OpenCVConstants {
 
-    public static String GRAY_TEST_NAME = "灰度图像";
-    public static String GREY_TEST_COM = "灰度测试";
+    public static String GRAY_TEST_NAME = "Image to gray";
+    public static String GREY_TEST_COM = "Gray Level Image";
 
-    public static String MAT_PIXEL_INVERT_NAME = "Mat像素操作——取反";
-    public static String MAT_PIXEL_INVERT_COM = "Mat取反";
+    public static String MAT_PIXEL_INVERT_NAME = "Convert:Mat";
+    public static String MAT_PIXEL_INVERT_COM = "Convert image in Mat";
 
-    public static String BITMAP_PIXEL_INVERT_NAME = "Bitmap像素操作——取反";
-    public static String BITMAP_PIXEL_INVERT_COM = "Bitmap取反";
+    public static String BITMAP_PIXEL_INVERT_NAME = "Convert:Bitmap";
+    public static String BITMAP_PIXEL_INVERT_COM = "Convert image in Bitmap";
 
-    public static String CONTRAST_RATIO_NAME = "调整对比度和亮度";
-    public static String CONTRAST_RATIO_COM = "对比度";
+    public static String CONTRAST_RATIO_BRIGHTNESS_NAME = "Adjust CM&BR";
+    public static String CONTRAST_RATIO_BRIGHTNESS_COM = "Adjust contrast ratio and brightness";
 }

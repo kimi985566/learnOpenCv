@@ -20,14 +20,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="选择图像"/>
+            android:text="Select Img"/>
 
         <Button
             android:id="@+id/btn_process"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="灰度图像"/>
+            android:text="Process"/>
     </LinearLayout>
 
     <ImageView
@@ -35,6 +35,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:padding="10dp"
-        android:autofillHints="请选择图像"/>
+        android:autofillHints="Select a image first"
+        android:padding="10dp"/>
 </LinearLayout>
