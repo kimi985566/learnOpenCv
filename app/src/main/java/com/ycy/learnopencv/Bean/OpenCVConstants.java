@@ -17,4 +17,10 @@ public class OpenCVConstants {
 
     public static String CONTRAST_RATIO_BRIGHTNESS_NAME = "Adjust CM&BR";
     public static String CONTRAST_RATIO_BRIGHTNESS_COM = "Adjust contrast ratio and brightness";
+
+    public static String IMAGE_CONTAINER_MAT_NAME = "Mat Operation";
+    public static String IMAGE_CONTAINER_MAT_COM = "Image Container: Mat, create a new image of mat";
+
+    public static String GET_ROI_NAME = "ROI Operation";
+    public static String GET_ROI_COM = "Get sub image";
 }

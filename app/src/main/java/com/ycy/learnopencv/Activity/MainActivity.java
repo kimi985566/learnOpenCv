@@ -64,6 +64,10 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 OpenCVConstants.BITMAP_PIXEL_INVERT_NAME, OpenCVConstants.BITMAP_PIXEL_INVERT_COM));
         mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(4,
                 OpenCVConstants.CONTRAST_RATIO_BRIGHTNESS_NAME, OpenCVConstants.CONTRAST_RATIO_BRIGHTNESS_COM));
+        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(5,
+                OpenCVConstants.IMAGE_CONTAINER_MAT_NAME, OpenCVConstants.IMAGE_CONTAINER_MAT_COM));
+        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(6,
+                OpenCVConstants.GET_ROI_NAME, OpenCVConstants.GET_ROI_COM));
         mOpenCVListViewAdapter.notifyDataSetChanged();
     }
 
@@ -125,6 +129,16 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
             intent.putExtra("name", mItem_name);
             startActivity(intent);
         } else if (OpenCVConstants.CONTRAST_RATIO_BRIGHTNESS_NAME.equals(mItem_name)) {
+            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
+            intent.putExtra("commend", mItem_cmd);
+            intent.putExtra("name", mItem_name);
+            startActivity(intent);
+        } else if (OpenCVConstants.IMAGE_CONTAINER_MAT_NAME.equals(mItem_name)) {
+            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
+            intent.putExtra("commend", mItem_cmd);
+            intent.putExtra("name", mItem_name);
+            startActivity(intent);
+        } else if (OpenCVConstants.GET_ROI_NAME.equals(mItem_name)) {
             Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
             intent.putExtra("commend", mItem_cmd);
             intent.putExtra("name", mItem_name);

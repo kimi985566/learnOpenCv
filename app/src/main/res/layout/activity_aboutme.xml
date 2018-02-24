@@ -19,7 +19,7 @@
             android:fitsSystemWindows="true"
             app:collapsedTitleGravity="start"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleGravity="center_horizontal"
+            app:expandedTitleGravity="center_horizontal|bottom"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:statusBarScrim="?attr/colorPrimary">
 

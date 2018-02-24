@@ -2,9 +2,11 @@ package com.ycy.learnopencv.Utils;
 
 import android.graphics.Bitmap;
 
+import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
@@ -112,5 +114,27 @@ public class ImageProcessUtils {
         bwImage.release();
         whiteImage.release();
         sSrc.release();
+    }
+
+    public static void mat_operation(Bitmap bitmap) {
+        sDst = new Mat(bitmap.getHeight(), bitmap.getWidth(), CvType.CV_8UC4, Scalar.all(127));
+        //learn CV_8UC4,CV_8UC3,8UC2 and other figures
+        org.opencv.android.Utils.matToBitmap(sDst, bitmap);
+        sDst.release();
+    }
+
+    public static Bitmap getRoi(Bitmap bitmap) {
+        Rect roi = new Rect(200, 150, 200, 300);
+        Bitmap roiMap = Bitmap.createBitmap(roi.width, roi.height, Bitmap.Config.ARGB_8888);
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        Mat roiMat = sSrc.submat(roi);
+        Mat roiDstMat = new Mat();
+        Imgproc.cvtColor(roiMat, roiDstMat, Imgproc.COLOR_BGRA2GRAY);
+        org.opencv.android.Utils.matToBitmap(roiDstMat, roiMap);
+
+        roiDstMat.release();
+        roiMat.release();
+        sSrc.release();
+        return roiMap;
     }
 }
