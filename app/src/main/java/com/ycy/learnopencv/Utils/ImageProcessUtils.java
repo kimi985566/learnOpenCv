@@ -2,7 +2,9 @@ package com.ycy.learnopencv.Utils;
 
 import android.graphics.Bitmap;
 
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
 /**
@@ -93,5 +95,15 @@ public class ImageProcessUtils {
         }
         bitmap.setPixels(sPixels, 0, sWidth, 0, 0, sWidth, sHeight);
         return bitmap;
+    }
+
+    public static void contrast_ratio_adjust(Bitmap bitmap) {
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        Mat whiteImage = new Mat(sSrc.size(), sSrc.type(), Scalar.all(2));//对比度两倍
+        Mat bwImage = new Mat(sSrc.size(), sSrc.type(), Scalar.all(30));//亮度+30
+        Core.multiply(whiteImage, sSrc, sSrc);
+        Core.add(bwImage, sSrc, sSrc);
+        org.opencv.android.Utils.matToBitmap(sSrc, bitmap);
+        sSrc.release();
     }
 }

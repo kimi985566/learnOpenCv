@@ -14,4 +14,7 @@ public class OpenCVConstants {
 
     public static String BITMAP_PIXEL_INVERT_NAME = "Bitmap像素操作——取反";
     public static String BITMAP_PIXEL_INVERT_COM = "Bitmap取反";
+
+    public static String CONTRAST_RATIO_NAME = "调整对比度和亮度";
+    public static String CONTRAST_RATIO_COM = "对比度";
 }
