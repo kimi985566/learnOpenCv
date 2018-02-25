@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 OpenCVConstants.BOX_BLUR_IMAGE_NAME, OpenCVConstants.BOX_BLUR_IMAGE_COM));
         mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(7,
                 OpenCVConstants.GAUSSIAN_BLUR_IMAGE_NAME, OpenCVConstants.GAUSSIAN_BLUR_IMAGE_COM));
+        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(7,
+                OpenCVConstants.BILATERAL_BLUR_IMAGE_NAME, OpenCVConstants.BILATERAL_BLUR_IMAGE_COM));
         mOpenCVListViewAdapter.notifyDataSetChanged();
     }
 
@@ -153,6 +155,11 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
             intent.putExtra("name", mItem_name);
             startActivity(intent);
         } else if (OpenCVConstants.GAUSSIAN_BLUR_IMAGE_NAME.equals(mItem_name)) {
+            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
+            intent.putExtra("commend", mItem_cmd);
+            intent.putExtra("name", mItem_name);
+            startActivity(intent);
+        } else if (OpenCVConstants.BILATERAL_BLUR_IMAGE_NAME.equals(mItem_name)) {
             Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
             intent.putExtra("commend", mItem_cmd);
             intent.putExtra("name", mItem_name);

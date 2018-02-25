@@ -29,4 +29,8 @@ public class OpenCVConstants {
 
     public static String GAUSSIAN_BLUR_IMAGE_NAME = "GAUSSIAN Blur";
     public static String GAUSSIAN_BLUR_IMAGE_COM = "Blur learning: GAUSSIAN Blur";
+
+    public static String BILATERAL_BLUR_IMAGE_NAME = "Bilateral Blur";
+    public static String BILATERAL_BLUR_IMAGE_COM = "Blur learning: Bilateral Blur";
+
 }

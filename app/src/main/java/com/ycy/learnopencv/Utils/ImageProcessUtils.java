@@ -140,23 +140,23 @@ public class ImageProcessUtils {
 
     }
 
+    /**
+     * These things should be in Imgproc, but I couldn't find them.
+     * So these figures are based on official website of OpenCV.
+     * <p>
+     * public static final int	BORDER_DEFAULT	4
+     * public static final int	BORDER_ISOLATED	16
+     * public static final int	BORDER_REFLECT	2
+     * public static final int	BORDER_REFLECT_101	4
+     * public static final int	BORDER_REFLECT101	4
+     * public static final int	BORDER_REPLICATE	1
+     * public static final int	BORDER_TRANSPARENT	5
+     * public static final int	BORDER_WRAP	3
+     **/
+
     public static void boxBlur(Bitmap bitmap) {
         org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);//convert Bitmap to mat
         Imgproc.blur(sSrc, sDst, new Size(15, 15), new Point(-1, -1), 4);
-        /**
-         * These things should be in Imgproc, but I couldn't find them.
-         * So these figures are based on official website of OpenCV.
-         *
-         * public static final int	BORDER_DEFAULT	4
-         * public static final int	BORDER_ISOLATED	16
-         * public static final int	BORDER_REFLECT	2
-         * public static final int	BORDER_REFLECT_101	4
-         * public static final int	BORDER_REFLECT101	4
-         * public static final int	BORDER_REPLICATE	1
-         * public static final int	BORDER_TRANSPARENT	5
-         * public static final int	BORDER_WRAP	3
-         *
-         **/
         org.opencv.android.Utils.matToBitmap(sDst, bitmap);
         sSrc.release();
         sDst.release();
@@ -165,6 +165,18 @@ public class ImageProcessUtils {
     public static void gaussianBlur(Bitmap bitmap) {
         org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);//convert Bitmap to mat
         Imgproc.GaussianBlur(sSrc, sDst, new Size(5, 5), 0, 0, 4);
+        org.opencv.android.Utils.matToBitmap(sDst, bitmap);
+        sSrc.release();
+        sDst.release();
+    }
+
+    public static void bilBlur(Bitmap bitmap) {
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);//convert Bitmap to mat
+        Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2BGR);
+        Imgproc.bilateralFilter(sSrc, sDst, 15, 150, 15, 4);
+        Mat kernel = new Mat(3, 3, CvType.CV_16S);
+        kernel.put(0, 0, 0, -1, 0, -1, 5, -1, 0, -1, 0);
+        Imgproc.filter2D(sDst, sDst, -1, kernel, new Point(-1, -1), 0.0, 4);
         org.opencv.android.Utils.matToBitmap(sDst, bitmap);
         sSrc.release();
         sDst.release();
