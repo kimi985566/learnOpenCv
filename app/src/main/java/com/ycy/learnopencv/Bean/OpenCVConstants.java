@@ -23,4 +23,10 @@ public class OpenCVConstants {
 
     public static String GET_ROI_NAME = "ROI Operation";
     public static String GET_ROI_COM = "Get sub image";
+
+    public static String BOX_BLUR_IMAGE_NAME = "Box Blur";
+    public static String BOX_BLUR_IMAGE_COM = "Blur learning: Box Blur";
+
+    public static String GAUSSIAN_BLUR_IMAGE_NAME = "GAUSSIAN Blur";
+    public static String GAUSSIAN_BLUR_IMAGE_COM = "Blur learning: GAUSSIAN Blur";
 }

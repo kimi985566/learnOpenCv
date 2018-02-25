@@ -2,12 +2,13 @@ package com.ycy.learnopencv.Utils;
 
 import android.graphics.Bitmap;
 
-import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 /**
@@ -118,7 +119,7 @@ public class ImageProcessUtils {
 
     public static void mat_operation(Bitmap bitmap) {
         sDst = new Mat(bitmap.getHeight(), bitmap.getWidth(), CvType.CV_8UC4, Scalar.all(127));
-        //learn CV_8UC4,CV_8UC3,8UC2 and other figures
+        //learn CV_8UC4,CV_8UC3,8UC1 and other figures
         org.opencv.android.Utils.matToBitmap(sDst, bitmap);
         sDst.release();
     }
@@ -136,5 +137,37 @@ public class ImageProcessUtils {
         roiMat.release();
         sSrc.release();
         return roiMap;
+
     }
+
+    public static void boxBlur(Bitmap bitmap) {
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);//convert Bitmap to mat
+        Imgproc.blur(sSrc, sDst, new Size(15, 15), new Point(-1, -1), 4);
+        /**
+         * These things should be in Imgproc, but I couldn't find them.
+         * So these figures are based on official website of OpenCV.
+         *
+         * public static final int	BORDER_DEFAULT	4
+         * public static final int	BORDER_ISOLATED	16
+         * public static final int	BORDER_REFLECT	2
+         * public static final int	BORDER_REFLECT_101	4
+         * public static final int	BORDER_REFLECT101	4
+         * public static final int	BORDER_REPLICATE	1
+         * public static final int	BORDER_TRANSPARENT	5
+         * public static final int	BORDER_WRAP	3
+         *
+         **/
+        org.opencv.android.Utils.matToBitmap(sDst, bitmap);
+        sSrc.release();
+        sDst.release();
+    }
+
+    public static void gaussianBlur(Bitmap bitmap) {
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);//convert Bitmap to mat
+        Imgproc.GaussianBlur(sSrc, sDst, new Size(5, 5), 0, 0, 4);
+        org.opencv.android.Utils.matToBitmap(sDst, bitmap);
+        sSrc.release();
+        sDst.release();
+    }
+
 }

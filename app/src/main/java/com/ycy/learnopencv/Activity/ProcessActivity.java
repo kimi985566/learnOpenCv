@@ -89,6 +89,10 @@ public class ProcessActivity extends AppCompatActivity {
             ImageProcessUtils.mat_operation(temp);
         } else if (OpenCVConstants.GET_ROI_NAME.equals(processName)) {
             temp = ImageProcessUtils.getRoi(temp);
+        } else if (OpenCVConstants.BOX_BLUR_IMAGE_NAME.equals(processName)) {
+            ImageProcessUtils.boxBlur(temp);
+        } else if (OpenCVConstants.GAUSSIAN_BLUR_IMAGE_NAME.equals(processName)) {
+            ImageProcessUtils.gaussianBlur(temp);
         }
         mIvProcess.setImageBitmap(temp);
     }
