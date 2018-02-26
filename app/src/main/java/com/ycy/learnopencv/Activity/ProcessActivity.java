@@ -102,6 +102,11 @@ public class ProcessActivity extends AppCompatActivity {
         } else if (OpenCVConstants.ERODE_NAME.equals(processName)
                 || OpenCVConstants.DILATE_NAME.equals(processName)) {
             ImageProcessUtils.erodeOrDilate(processName, temp);
+        } else if (OpenCVConstants.OPEN_OPERATION_NAME.equals(processName)
+                || OpenCVConstants.CLOSE_OPERATION_NAME.equals(processName)) {
+            ImageProcessUtils.openOrClose(processName, temp);
+        } else if (OpenCVConstants.MORPH_LINE_OPERATION_NAME.equals(processName)) {
+            ImageProcessUtils.lineDetection(temp);
         }
         mIvProcess.setImageBitmap(temp);
     }

@@ -35,6 +35,7 @@ public class ImageProcessUtils {
     private static int[] sPixels;
     private static int sPixel = 0;
     private static Mat sKernel;
+    private static Mat sStrElement;
 
     public static Bitmap covert2Gray(Bitmap bitmap) {
         org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);//convert Bitmap to mat
@@ -226,4 +227,33 @@ public class ImageProcessUtils {
         sDst.release();
     }
 
+    public static void openOrClose(String command, Bitmap bitmap) {
+        Boolean isOpen = OpenCVConstants.OPEN_OPERATION_NAME.equals(command);
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        sStrElement = Imgproc.getStructuringElement(Imgproc.MORPH_CROSS,
+                new Size(3, 3), new Point(-1, -1));
+        if (isOpen) {
+            Imgproc.morphologyEx(sSrc, sDst, Imgproc.MORPH_OPEN, sStrElement);
+        } else {
+            Imgproc.morphologyEx(sSrc, sDst, Imgproc.MORPH_CLOSE, sStrElement);
+        }
+        org.opencv.android.Utils.matToBitmap(sDst, bitmap);
+        sStrElement.release();
+        sSrc.release();
+        sDst.release();
+    }
+
+    public static void lineDetection(Bitmap bitmap) {
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.threshold(sSrc, sSrc, 0, 255,
+                Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU);
+        sStrElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT,
+                new Size(35, 1), new Point(-1, -1));
+        Imgproc.morphologyEx(sSrc, sDst, Imgproc.MORPH_OPEN, sStrElement);
+        org.opencv.android.Utils.matToBitmap(sDst, bitmap);
+        sStrElement.release();
+        sSrc.release();
+        sDst.release();
+    }
 }

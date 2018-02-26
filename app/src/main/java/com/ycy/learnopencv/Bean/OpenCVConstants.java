@@ -62,4 +62,15 @@ public class OpenCVConstants {
     public static String DILATE_NAME = "Dilate";
     public static String DILATE_COM = "Learning Dilate";
 
+    //开操作
+    public static String OPEN_OPERATION_NAME = "Open Operation";
+    public static String OPEN_OPERATION_COM = "Learning Open Operation";
+
+    //闭操作
+    public static String CLOSE_OPERATION_NAME = "Close Operation";
+    public static String CLOSE_OPERATION_COM = "Learning Close Operation";
+
+    //形态学直线检测
+    public static String MORPH_LINE_OPERATION_NAME = "Line Detection";
+    public static String MORPH_LINE_OPERATION_COM = "形态学直线检测";
 }
