@@ -95,6 +95,10 @@ public class ProcessActivity extends AppCompatActivity {
             ImageProcessUtils.gaussianBlur(temp);
         } else if (OpenCVConstants.BILATERAL_BLUR_IMAGE_NAME.equals(processName)) {
             ImageProcessUtils.bilBlur(temp);
+        } else if (OpenCVConstants.CUSTOM_BLUR_NAME.equals(processName)
+                || OpenCVConstants.CUSTOM_EDGE_NAME.equals(processName)
+                || OpenCVConstants.CUSTOM_SHARPEN_NAME.equals(processName)) {
+            ImageProcessUtils.customFilter(processName, temp);
         }
         mIvProcess.setImageBitmap(temp);
     }

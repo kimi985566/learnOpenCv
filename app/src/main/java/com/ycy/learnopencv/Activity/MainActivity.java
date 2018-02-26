@@ -74,6 +74,12 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 OpenCVConstants.GAUSSIAN_BLUR_IMAGE_NAME, OpenCVConstants.GAUSSIAN_BLUR_IMAGE_COM));
         mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(7,
                 OpenCVConstants.BILATERAL_BLUR_IMAGE_NAME, OpenCVConstants.BILATERAL_BLUR_IMAGE_COM));
+        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(8,
+                OpenCVConstants.CUSTOM_BLUR_NAME, OpenCVConstants.CUSTOM_BLUR_COM));
+        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(9,
+                OpenCVConstants.CUSTOM_EDGE_NAME, OpenCVConstants.CUSTOM_EDGE_COM));
+        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(10,
+                OpenCVConstants.CUSTOM_SHARPEN_NAME, OpenCVConstants.CUSTOM_SHARPEN_COM));
         mOpenCVListViewAdapter.notifyDataSetChanged();
     }
 
@@ -160,6 +166,13 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
             intent.putExtra("name", mItem_name);
             startActivity(intent);
         } else if (OpenCVConstants.BILATERAL_BLUR_IMAGE_NAME.equals(mItem_name)) {
+            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
+            intent.putExtra("commend", mItem_cmd);
+            intent.putExtra("name", mItem_name);
+            startActivity(intent);
+        } else if (OpenCVConstants.CUSTOM_BLUR_NAME.equals(mItem_name)
+                || OpenCVConstants.CUSTOM_EDGE_NAME.equals(mItem_name)
+                || OpenCVConstants.CUSTOM_SHARPEN_NAME.equals(mItem_name)) {
             Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
             intent.putExtra("commend", mItem_cmd);
             intent.putExtra("name", mItem_name);

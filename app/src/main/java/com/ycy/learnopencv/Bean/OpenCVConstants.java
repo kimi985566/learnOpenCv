@@ -33,4 +33,13 @@ public class OpenCVConstants {
     public static String BILATERAL_BLUR_IMAGE_NAME = "Bilateral Blur";
     public static String BILATERAL_BLUR_IMAGE_COM = "Blur learning: Bilateral Blur";
 
+    public static String CUSTOM_BLUR_NAME = "Custom Blur";
+    public static String CUSTOM_BLUR_COM = "Custom Blur";
+
+    public static String CUSTOM_EDGE_NAME = "Custom Edge";
+    public static String CUSTOM_EDGE_COM = "Custom Edge";
+
+    public static String CUSTOM_SHARPEN_NAME = "Custom Sharpen";
+    public static String CUSTOM_SHARPEN_COM = "Custom Sharpen";
+
 }

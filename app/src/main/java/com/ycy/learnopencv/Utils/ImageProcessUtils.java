@@ -2,6 +2,8 @@ package com.ycy.learnopencv.Utils;
 
 import android.graphics.Bitmap;
 
+import com.ycy.learnopencv.Bean.OpenCVConstants;
+
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -32,6 +34,7 @@ public class ImageProcessUtils {
     private static int sB = 0;
     private static int[] sPixels;
     private static int sPixel = 0;
+    private static Mat sKernel;
 
     public static Bitmap covert2Gray(Bitmap bitmap) {
         org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);//convert Bitmap to mat
@@ -174,12 +177,37 @@ public class ImageProcessUtils {
         org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);//convert Bitmap to mat
         Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2BGR);
         Imgproc.bilateralFilter(sSrc, sDst, 15, 150, 15, 4);
-        Mat kernel = new Mat(3, 3, CvType.CV_16S);
-        kernel.put(0, 0, 0, -1, 0, -1, 5, -1, 0, -1, 0);
-        Imgproc.filter2D(sDst, sDst, -1, kernel, new Point(-1, -1), 0.0, 4);
+        sKernel = new Mat(3, 3, CvType.CV_16S);
+        sKernel.put(0, 0, 0, -1, 0, -1, 5, -1, 0, -1, 0);
+        Imgproc.filter2D(sDst, sDst, -1, sKernel, new Point(-1, -1), 0.0, 4);
         org.opencv.android.Utils.matToBitmap(sDst, bitmap);
+        sKernel.release();
         sSrc.release();
         sDst.release();
+    }
+
+    public static void customFilter(String command, Bitmap bitmap) {
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        sKernel = getCustomOperator(command);
+        Imgproc.filter2D(sSrc, sDst, -1, sKernel, new Point(-1, -1), 0.0, 4);
+        org.opencv.android.Utils.matToBitmap(sDst, bitmap);
+        sKernel.release();
+        sSrc.release();
+        sDst.release();
+    }
+
+    private static Mat getCustomOperator(String command) {
+        sKernel = new Mat(3, 3, CvType.CV_32FC1);
+        if (command.equals(OpenCVConstants.CUSTOM_BLUR_NAME)) {
+            sKernel.put(0, 0, 1.0 / 9.0, 1.0 / 9.0, 1.0 / 9.0,
+                    1.0 / 9.0, 1.0 / 9.0, 1.0 / 9.0,
+                    1.0 / 9.0, 1.0 / 9.0, 1.0 / 9.0);
+        } else if (command.equals(OpenCVConstants.CUSTOM_EDGE_NAME)) {
+            sKernel.put(0, 0, -1, -1, -1, -1, 8, -1, -1, -1, -1);
+        } else if (command.equals(OpenCVConstants.CUSTOM_SHARPEN_NAME)) {
+            sKernel.put(0, 0, -1, -1, -1, -1, 9, -1, -1, -1, -1);
+        }
+        return sKernel;
     }
 
 }
