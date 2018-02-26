@@ -99,6 +99,9 @@ public class ProcessActivity extends AppCompatActivity {
                 || OpenCVConstants.CUSTOM_EDGE_NAME.equals(processName)
                 || OpenCVConstants.CUSTOM_SHARPEN_NAME.equals(processName)) {
             ImageProcessUtils.customFilter(processName, temp);
+        } else if (OpenCVConstants.ERODE_NAME.equals(processName)
+                || OpenCVConstants.DILATE_NAME.equals(processName)) {
+            ImageProcessUtils.erodeOrDilate(processName, temp);
         }
         mIvProcess.setImageBitmap(temp);
     }

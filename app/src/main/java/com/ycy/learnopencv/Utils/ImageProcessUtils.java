@@ -210,4 +210,20 @@ public class ImageProcessUtils {
         return sKernel;
     }
 
+    public static void erodeOrDilate(String command, Bitmap bitmap) {
+        Boolean isErode = OpenCVConstants.ERODE_NAME.equals(command);
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        Mat strElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT,
+                new Size(3, 3), new Point(-1, -1));
+        if (isErode) {
+            Imgproc.erode(sSrc, sDst, strElement, new Point(-1, -1), 3);
+        } else {
+            Imgproc.dilate(sSrc, sDst, strElement, new Point(-1, -1), 3);
+        }
+        org.opencv.android.Utils.matToBitmap(sDst, bitmap);
+        strElement.release();
+        sSrc.release();
+        sDst.release();
+    }
+
 }
