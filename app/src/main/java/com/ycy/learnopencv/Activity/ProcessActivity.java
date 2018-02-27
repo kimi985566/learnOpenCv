@@ -111,7 +111,8 @@ public class ProcessActivity extends AppCompatActivity {
             ImageProcessUtils.lineDetection(temp);
         } else if (OpenCVConstants.THRESH_BINARY_NAME.equals(processName)
                 || OpenCVConstants.THRESH_BINARY_INV_NAME.equals(processName)
-                || OpenCVConstants.THRESH_TRUNCAT_NAME.equals(processName)) {
+                || OpenCVConstants.THRESH_TRUNCAT_NAME.equals(processName)
+                || OpenCVConstants.THRESH_ZERO_NAME.equals(processName)) {
             ImageProcessUtils.thresholdImg(processName, temp);
         }
         mIvProcess.setImageBitmap(temp);

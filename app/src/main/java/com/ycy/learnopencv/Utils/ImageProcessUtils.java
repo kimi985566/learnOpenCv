@@ -273,6 +273,8 @@ public class ImageProcessUtils {
             return Imgproc.THRESH_BINARY_INV | Imgproc.THRESH_OTSU;
         } else if (OpenCVConstants.THRESH_TRUNCAT_NAME.equals(command)) {
             return Imgproc.THRESH_TRUNC | Imgproc.THRESH_OTSU;
+        } else if (OpenCVConstants.THRESH_ZERO_NAME.equals(command)) {
+            return Imgproc.THRESH_TOZERO | Imgproc.THRESH_OTSU;
         } else {
             return Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU;
         }

@@ -96,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 OpenCVConstants.THRESH_BINARY_INV_NAME, OpenCVConstants.THRESH_BINARY_INV_COM));
         mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(17,
                 OpenCVConstants.THRESH_TRUNCAT_NAME, OpenCVConstants.THRESH_TRUNCAT_COM));
+        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(18,
+                OpenCVConstants.THRESH_ZERO_NAME, OpenCVConstants.THRESH_ZERO_COM));
         mOpenCVListViewAdapter.notifyDataSetChanged();
     }
 
@@ -212,7 +214,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
             startActivity(intent);
         } else if (OpenCVConstants.THRESH_BINARY_NAME.equals(mItem_name)
                 || OpenCVConstants.THRESH_BINARY_INV_NAME.equals(mItem_name)
-                || OpenCVConstants.THRESH_TRUNCAT_NAME.equals(mItem_name)) {
+                || OpenCVConstants.THRESH_TRUNCAT_NAME.equals(mItem_name)
+                ||OpenCVConstants.THRESH_ZERO_NAME.equals(mItem_name)) {
             Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
             intent.putExtra("commend", mItem_cmd);
             intent.putExtra("name", mItem_name);

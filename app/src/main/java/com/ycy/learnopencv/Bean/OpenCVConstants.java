@@ -85,4 +85,8 @@ public class OpenCVConstants {
     //阈值截断
     public static String THRESH_TRUNCAT_NAME = "Thresh Truncat";
     public static String THRESH_TRUNCAT_COM = "Thresh Truncat Operation";
+
+    //阈值取零
+    public static String THRESH_ZERO_NAME = "Thresh Zero";
+    public static String THRESH_ZERO_COM = "Thresh Zero Operation";
 }
