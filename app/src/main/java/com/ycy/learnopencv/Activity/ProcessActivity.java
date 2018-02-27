@@ -49,6 +49,8 @@ public class ProcessActivity extends AppCompatActivity {
         processName = this.getIntent().getStringExtra("name");
         mBtnProcess.setText(processName);
         actionBarSetting();
+
+        mBitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_image_aboutme);
     }
 
     private void actionBarSetting() {
@@ -107,6 +109,10 @@ public class ProcessActivity extends AppCompatActivity {
             ImageProcessUtils.openOrClose(processName, temp);
         } else if (OpenCVConstants.MORPH_LINE_OPERATION_NAME.equals(processName)) {
             ImageProcessUtils.lineDetection(temp);
+        } else if (OpenCVConstants.THRESH_BINARY_NAME.equals(processName)
+                || OpenCVConstants.THRESH_BINARY_INV_NAME.equals(processName)
+                || OpenCVConstants.THRESH_TRUNCAT_NAME.equals(processName)) {
+            ImageProcessUtils.thresholdImg(processName, temp);
         }
         mIvProcess.setImageBitmap(temp);
     }

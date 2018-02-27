@@ -73,4 +73,16 @@ public class OpenCVConstants {
     //形态学直线检测
     public static String MORPH_LINE_OPERATION_NAME = "Line Detection";
     public static String MORPH_LINE_OPERATION_COM = "形态学直线检测";
+
+    //阈值二值化
+    public static String THRESH_BINARY_NAME = "Thresh Binary";
+    public static String THRESH_BINARY_COM = "Thresh Binary Operation";
+
+    //阈值反二值化
+    public static String THRESH_BINARY_INV_NAME = "Thresh Binary Inverse";
+    public static String THRESH_BINARY_INV_COM = "Thresh Binary Inverse Operation";
+
+    //阈值截断
+    public static String THRESH_TRUNCAT_NAME = "Thresh Truncat";
+    public static String THRESH_TRUNCAT_COM = "Thresh Truncat Operation";
 }

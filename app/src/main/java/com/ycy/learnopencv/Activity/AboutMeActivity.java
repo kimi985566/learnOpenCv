@@ -44,7 +44,6 @@ public class AboutMeActivity extends AppCompatActivity {
         collapsingToolbarSetting();
 
         mWebView.loadUrl("https://github.com/kimi985566");
-
     }
 
     private void collapsingToolbarSetting() {

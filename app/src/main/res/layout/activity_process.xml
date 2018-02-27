@@ -36,5 +36,6 @@
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:autofillHints="Select a image first"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:src="@drawable/ic_image_aboutme"/>
 </LinearLayout>

@@ -256,4 +256,25 @@ public class ImageProcessUtils {
         sSrc.release();
         sDst.release();
     }
+
+    public static void thresholdImg(String command, Bitmap bitmap) {
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.threshold(sSrc, sDst, 0, 255, getType(command));
+        org.opencv.android.Utils.matToBitmap(sDst, bitmap);
+        sSrc.release();
+        sDst.release();
+    }
+
+    private static int getType(String command) {
+        if (OpenCVConstants.THRESH_BINARY_NAME.equals(command)) {
+            return Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU;
+        } else if (OpenCVConstants.THRESH_BINARY_INV_NAME.equals(command)) {
+            return Imgproc.THRESH_BINARY_INV | Imgproc.THRESH_OTSU;
+        } else if (OpenCVConstants.THRESH_TRUNCAT_NAME.equals(command)) {
+            return Imgproc.THRESH_TRUNC | Imgproc.THRESH_OTSU;
+        } else {
+            return Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU;
+        }
+    }
 }
