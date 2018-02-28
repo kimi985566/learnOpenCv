@@ -14,7 +14,6 @@ import android.widget.ListView;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
 import com.ycy.learnopencv.Adapter.OpenCVListViewAdapter;
-import com.ycy.learnopencv.Bean.OpenCVConstants;
 import com.ycy.learnopencv.Bean.OpenCVInfo;
 import com.ycy.learnopencv.R;
 
@@ -51,15 +50,6 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         initUI();
     }
 
-    private void initUI() {
-        setSupportActionBar(mToolbar);
-        mOpenCVListViewAdapter = new OpenCVListViewAdapter(this, mOpenCVInfos);
-        mListView.setAdapter(mOpenCVListViewAdapter);
-        mListView.setOnItemClickListener(this);
-        mOpenCVListViewAdapter.getOpenCVInfos().addAll(OpenCVInfo.getAllList());
-        mOpenCVListViewAdapter.notifyDataSetChanged();
-    }
-
     private void initOpenCVLibs() {
         boolean isSuccess = OpenCVLoader.initDebug();
         if (isSuccess) {
@@ -67,27 +57,13 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_aboutMe) {
-            Intent intent = new Intent(this.getApplicationContext(), AboutMeActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    private void initUI() {
+        setSupportActionBar(mToolbar);
+        mOpenCVListViewAdapter = new OpenCVListViewAdapter(this, mOpenCVInfos);
+        mListView.setAdapter(mOpenCVListViewAdapter);
+        mListView.setOnItemClickListener(this);
+        mOpenCVListViewAdapter.getOpenCVInfos().addAll(OpenCVInfo.getAllList());
+        mOpenCVListViewAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -102,83 +78,29 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     }
 
     private void processIntent() {
-        if (OpenCVConstants.GRAY_TEST_NAME.equals(mItem_name)) {
-            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
-            intent.putExtra("commend", mItem_cmd);
-            intent.putExtra("name", mItem_name);
+        Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
+        intent.putExtra("commend", mItem_cmd);
+        intent.putExtra("name", mItem_name);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.action_aboutMe) {
+            Intent intent = new Intent(this.getApplicationContext(), AboutMeActivity.class);
             startActivity(intent);
-        } else if (OpenCVConstants.MAT_PIXEL_INVERT_NAME.equals(mItem_name)) {
-            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
-            intent.putExtra("commend", mItem_cmd);
-            intent.putExtra("name", mItem_name);
-            startActivity(intent);
-        } else if (OpenCVConstants.BITMAP_PIXEL_INVERT_NAME.equals(mItem_name)) {
-            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
-            intent.putExtra("commend", mItem_cmd);
-            intent.putExtra("name", mItem_name);
-            startActivity(intent);
-        } else if (OpenCVConstants.CONTRAST_RATIO_BRIGHTNESS_NAME.equals(mItem_name)) {
-            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
-            intent.putExtra("commend", mItem_cmd);
-            intent.putExtra("name", mItem_name);
-            startActivity(intent);
-        } else if (OpenCVConstants.IMAGE_CONTAINER_MAT_NAME.equals(mItem_name)) {
-            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
-            intent.putExtra("commend", mItem_cmd);
-            intent.putExtra("name", mItem_name);
-            startActivity(intent);
-        } else if (OpenCVConstants.GET_ROI_NAME.equals(mItem_name)) {
-            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
-            intent.putExtra("commend", mItem_cmd);
-            intent.putExtra("name", mItem_name);
-            startActivity(intent);
-        } else if (OpenCVConstants.BOX_BLUR_IMAGE_NAME.equals(mItem_name)) {
-            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
-            intent.putExtra("commend", mItem_cmd);
-            intent.putExtra("name", mItem_name);
-            startActivity(intent);
-        } else if (OpenCVConstants.GAUSSIAN_BLUR_IMAGE_NAME.equals(mItem_name)) {
-            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
-            intent.putExtra("commend", mItem_cmd);
-            intent.putExtra("name", mItem_name);
-            startActivity(intent);
-        } else if (OpenCVConstants.BILATERAL_BLUR_IMAGE_NAME.equals(mItem_name)) {
-            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
-            intent.putExtra("commend", mItem_cmd);
-            intent.putExtra("name", mItem_name);
-            startActivity(intent);
-        } else if (OpenCVConstants.CUSTOM_BLUR_NAME.equals(mItem_name)
-                || OpenCVConstants.CUSTOM_EDGE_NAME.equals(mItem_name)
-                || OpenCVConstants.CUSTOM_SHARPEN_NAME.equals(mItem_name)) {
-            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
-            intent.putExtra("commend", mItem_cmd);
-            intent.putExtra("name", mItem_name);
-            startActivity(intent);
-        } else if (OpenCVConstants.ERODE_NAME.equals(mItem_name)
-                || OpenCVConstants.DILATE_NAME.equals(mItem_name)) {
-            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
-            intent.putExtra("commend", mItem_cmd);
-            intent.putExtra("name", mItem_name);
-            startActivity(intent);
-        } else if (OpenCVConstants.OPEN_OPERATION_NAME.equals(mItem_name)
-                || OpenCVConstants.CLOSE_OPERATION_NAME.equals(mItem_name)) {
-            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
-            intent.putExtra("commend", mItem_cmd);
-            intent.putExtra("name", mItem_name);
-            startActivity(intent);
-        } else if (OpenCVConstants.MORPH_LINE_OPERATION_NAME.equals(mItem_name)) {
-            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
-            intent.putExtra("commend", mItem_cmd);
-            intent.putExtra("name", mItem_name);
-            startActivity(intent);
-        } else if (OpenCVConstants.THRESH_BINARY_NAME.equals(mItem_name)
-                || OpenCVConstants.THRESH_BINARY_INV_NAME.equals(mItem_name)
-                || OpenCVConstants.THRESH_TRUNCAT_NAME.equals(mItem_name)
-                || OpenCVConstants.THRESH_ZERO_NAME.equals(mItem_name)) {
-            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
-            intent.putExtra("commend", mItem_cmd);
-            intent.putExtra("name", mItem_name);
-            startActivity(intent);
+            return true;
         }
+
+        return super.onOptionsItemSelected(item);
     }
 }
