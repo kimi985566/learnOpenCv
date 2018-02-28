@@ -4,7 +4,7 @@ package com.ycy.learnopencv.Bean;
  * Created by kimi9 on 2018/2/22.
  */
 
-public class OpenCVConstants {
+public interface OpenCVConstants {
 
     //灰度图形
     public static String GRAY_TEST_NAME = "Image to gray";

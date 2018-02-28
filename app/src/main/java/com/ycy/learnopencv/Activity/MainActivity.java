@@ -56,48 +56,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         mOpenCVListViewAdapter = new OpenCVListViewAdapter(this, mOpenCVInfos);
         mListView.setAdapter(mOpenCVListViewAdapter);
         mListView.setOnItemClickListener(this);
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(1,
-                OpenCVConstants.GRAY_TEST_NAME, OpenCVConstants.GREY_TEST_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(2,
-                OpenCVConstants.MAT_PIXEL_INVERT_NAME, OpenCVConstants.MAT_PIXEL_INVERT_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(3,
-                OpenCVConstants.BITMAP_PIXEL_INVERT_NAME, OpenCVConstants.BITMAP_PIXEL_INVERT_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(4,
-                OpenCVConstants.CONTRAST_RATIO_BRIGHTNESS_NAME, OpenCVConstants.CONTRAST_RATIO_BRIGHTNESS_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(5,
-                OpenCVConstants.IMAGE_CONTAINER_MAT_NAME, OpenCVConstants.IMAGE_CONTAINER_MAT_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(6,
-                OpenCVConstants.GET_ROI_NAME, OpenCVConstants.GET_ROI_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(7,
-                OpenCVConstants.BOX_BLUR_IMAGE_NAME, OpenCVConstants.BOX_BLUR_IMAGE_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(7,
-                OpenCVConstants.GAUSSIAN_BLUR_IMAGE_NAME, OpenCVConstants.GAUSSIAN_BLUR_IMAGE_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(7,
-                OpenCVConstants.BILATERAL_BLUR_IMAGE_NAME, OpenCVConstants.BILATERAL_BLUR_IMAGE_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(8,
-                OpenCVConstants.CUSTOM_BLUR_NAME, OpenCVConstants.CUSTOM_BLUR_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(9,
-                OpenCVConstants.CUSTOM_EDGE_NAME, OpenCVConstants.CUSTOM_EDGE_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(10,
-                OpenCVConstants.CUSTOM_SHARPEN_NAME, OpenCVConstants.CUSTOM_SHARPEN_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(11,
-                OpenCVConstants.ERODE_NAME, OpenCVConstants.ERODE_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(12,
-                OpenCVConstants.DILATE_NAME, OpenCVConstants.DILATE_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(13,
-                OpenCVConstants.OPEN_OPERATION_NAME, OpenCVConstants.OPEN_OPERATION_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(14,
-                OpenCVConstants.CLOSE_OPERATION_NAME, OpenCVConstants.CLOSE_OPERATION_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(15,
-                OpenCVConstants.MORPH_LINE_OPERATION_NAME, OpenCVConstants.MORPH_LINE_OPERATION_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(16,
-                OpenCVConstants.THRESH_BINARY_NAME, OpenCVConstants.THRESH_BINARY_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(16,
-                OpenCVConstants.THRESH_BINARY_INV_NAME, OpenCVConstants.THRESH_BINARY_INV_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(17,
-                OpenCVConstants.THRESH_TRUNCAT_NAME, OpenCVConstants.THRESH_TRUNCAT_COM));
-        mOpenCVListViewAdapter.getOpenCVInfos().add(new OpenCVInfo(18,
-                OpenCVConstants.THRESH_ZERO_NAME, OpenCVConstants.THRESH_ZERO_COM));
+        mOpenCVListViewAdapter.getOpenCVInfos().addAll(OpenCVInfo.getAllList());
         mOpenCVListViewAdapter.notifyDataSetChanged();
     }
 
@@ -215,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         } else if (OpenCVConstants.THRESH_BINARY_NAME.equals(mItem_name)
                 || OpenCVConstants.THRESH_BINARY_INV_NAME.equals(mItem_name)
                 || OpenCVConstants.THRESH_TRUNCAT_NAME.equals(mItem_name)
-                ||OpenCVConstants.THRESH_ZERO_NAME.equals(mItem_name)) {
+                || OpenCVConstants.THRESH_ZERO_NAME.equals(mItem_name)) {
             Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
             intent.putExtra("commend", mItem_cmd);
             intent.putExtra("name", mItem_name);
