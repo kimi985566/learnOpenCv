@@ -2,4 +2,5 @@
     <string name="app_name">learnOpenCv</string>
     <string name="action_aboutMe">About Me</string>
     <string name="tv_aboutMe_title">Chengyu Yang</string>
+    <string name="title_activity_thresh_hold_process">ThreshHoldProcessActivity</string>
 </resources>
