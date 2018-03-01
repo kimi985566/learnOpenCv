@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
 import com.ycy.learnopencv.Adapter.OpenCVListViewAdapter;
+import com.ycy.learnopencv.Bean.OpenCVConstants;
 import com.ycy.learnopencv.Bean.OpenCVInfo;
 import com.ycy.learnopencv.R;
 
@@ -78,10 +79,17 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     }
 
     private void processIntent() {
-        Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
-        intent.putExtra("commend", mItem_cmd);
-        intent.putExtra("name", mItem_name);
-        startActivity(intent);
+        if (OpenCVConstants.MANUAL_THRESH_NAME.equals(mItem_name)) {
+            Intent intent = new Intent(MainActivity.this, ThreshHoldProcessActivity.class);
+            intent.putExtra("commend", mItem_cmd);
+            intent.putExtra("name", mItem_name);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
+            intent.putExtra("commend", mItem_cmd);
+            intent.putExtra("name", mItem_name);
+            startActivity(intent);
+        }
     }
 
     @Override

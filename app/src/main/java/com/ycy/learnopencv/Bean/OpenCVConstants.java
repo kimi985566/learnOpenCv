@@ -89,4 +89,8 @@ public interface OpenCVConstants {
     //阈值取零
     String THRESH_ZERO_NAME = "Thresh Zero";
     String THRESH_ZERO_COM = "Thresh Zero Operation";
+
+    //人工阈值
+    String MANUAL_THRESH_NAME = "Manual Thresh";
+    String MANUAL_THRESH_COM = "Manual Thresh Operation";
 }

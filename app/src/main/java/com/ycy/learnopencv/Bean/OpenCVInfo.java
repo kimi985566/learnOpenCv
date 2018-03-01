@@ -73,6 +73,7 @@ public class OpenCVInfo implements OpenCVConstants {
         list.add(new OpenCVInfo(16, THRESH_BINARY_INV_NAME, THRESH_BINARY_INV_COM));
         list.add(new OpenCVInfo(17, THRESH_TRUNCAT_NAME, THRESH_TRUNCAT_COM));
         list.add(new OpenCVInfo(18, THRESH_ZERO_NAME, THRESH_ZERO_COM));
+        list.add(new OpenCVInfo(19, MANUAL_THRESH_NAME, MANUAL_THRESH_COM));
 
         return list;
     }

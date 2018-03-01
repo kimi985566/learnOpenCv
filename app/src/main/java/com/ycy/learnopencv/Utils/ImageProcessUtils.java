@@ -279,4 +279,13 @@ public class ImageProcessUtils {
             return Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU;
         }
     }
+
+    public static void manualThresholdImg(int t, Bitmap bitmap) {
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.threshold(sSrc, sDst, t, 255, Imgproc.THRESH_BINARY);
+        org.opencv.android.Utils.matToBitmap(sDst, bitmap);
+        sSrc.release();
+        sDst.release();
+    }
 }
