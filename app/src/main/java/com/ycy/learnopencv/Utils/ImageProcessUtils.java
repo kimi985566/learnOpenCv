@@ -21,10 +21,14 @@ public class ImageProcessUtils {
 
     private static Mat sSrc = new Mat();
     private static Mat sDst = new Mat();
+    private static Mat sKernel;
+    private static Mat sStrElement;
+
     private static int sWidth; //width
     private static int sHeight;  //height
     private static int sRow; //Row--height
     private static int sCol; //col--width
+    private static int sPixel = 0;
     private static int sIndex;
 
     //ARGB values
@@ -32,10 +36,8 @@ public class ImageProcessUtils {
     private static int sR = 0;
     private static int sG = 0;
     private static int sB = 0;
+
     private static int[] sPixels;
-    private static int sPixel = 0;
-    private static Mat sKernel;
-    private static Mat sStrElement;
 
     public static Bitmap covert2Gray(Bitmap bitmap) {
         org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);//convert Bitmap to mat
@@ -49,7 +51,6 @@ public class ImageProcessUtils {
     public static Bitmap invertMat(Bitmap bitmap) {
 
         org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
-
         //pixel operation
         //width of mat
         sWidth = sSrc.cols();
@@ -287,5 +288,25 @@ public class ImageProcessUtils {
         org.opencv.android.Utils.matToBitmap(sDst, bitmap);
         sSrc.release();
         sDst.release();
+    }
+
+    public static void adaptiveThresholdImg(String command, Bitmap bitmap) {
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.adaptiveThreshold(sSrc, sDst, 255, getAdaptiveThreshold(command),
+                Imgproc.THRESH_BINARY, 19, 0.0);
+        org.opencv.android.Utils.matToBitmap(sDst, bitmap);
+        sSrc.release();
+        sDst.release();
+    }
+
+    private static int getAdaptiveThreshold(String command) {
+        if (OpenCVConstants.ADAPTIVE_THRESH_MEAN_NAME.equals(command)) {
+            return Imgproc.ADAPTIVE_THRESH_MEAN_C;
+        } else if (OpenCVConstants.ADAPTIVE_THRESH_GAUSSIAN_NAME.equals(command)) {
+            return Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C;
+        } else {
+            return Imgproc.ADAPTIVE_THRESH_MEAN_C;
+        }
     }
 }

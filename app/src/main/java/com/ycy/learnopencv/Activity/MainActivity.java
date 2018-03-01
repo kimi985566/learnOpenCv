@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     Toolbar mToolbar;
     private List<OpenCVInfo> mOpenCVInfos = new ArrayList<>();
     private OpenCVListViewAdapter mOpenCVListViewAdapter;
-    private String mItem_cmd;
-    private String mItem_name;
+    private String mProcessName;
+    private String mProcessCMD;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,22 +72,22 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         Object object = view.getTag();
         if (object instanceof OpenCVInfo) {
             OpenCVInfo openCVInfo = (OpenCVInfo) object;
-            mItem_name = openCVInfo.getName();
-            mItem_cmd = openCVInfo.getCommend();
+            mProcessName = openCVInfo.getName();
+            mProcessCMD = openCVInfo.getCommend();
         }
         processIntent();
     }
 
     private void processIntent() {
-        if (OpenCVConstants.MANUAL_THRESH_NAME.equals(mItem_name)) {
+        if (OpenCVConstants.MANUAL_THRESH_NAME.equals(mProcessName)) {
             Intent intent = new Intent(MainActivity.this, ThreshHoldProcessActivity.class);
-            intent.putExtra("commend", mItem_cmd);
-            intent.putExtra("name", mItem_name);
+            intent.putExtra("commend", mProcessCMD);
+            intent.putExtra("name", mProcessName);
             startActivity(intent);
         } else {
             Intent intent = new Intent(MainActivity.this, ProcessActivity.class);
-            intent.putExtra("commend", mItem_cmd);
-            intent.putExtra("name", mItem_name);
+            intent.putExtra("commend", mProcessCMD);
+            intent.putExtra("name", mProcessName);
             startActivity(intent);
         }
     }

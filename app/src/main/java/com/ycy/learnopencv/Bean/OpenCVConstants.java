@@ -93,4 +93,12 @@ public interface OpenCVConstants {
     //人工阈值
     String MANUAL_THRESH_NAME = "Manual Thresh";
     String MANUAL_THRESH_COM = "Manual Thresh Operation";
+
+    //自适应阈值
+    String ADAPTIVE_THRESH_MEAN_NAME = "Adaptive Thresh:Mean";
+    String ADAPTIVE_THRESH_MEAN_COM = "Adaptive Thresh Mean Operation";
+
+    //自适应阈值
+    String ADAPTIVE_THRESH_GAUSSIAN_NAME = "Adaptive Thresh:GAUSSIAN";
+    String ADAPTIVE_THRESH_GAUSSIAN_COM = "Adaptive Thresh Gaussian Operation";
 }
