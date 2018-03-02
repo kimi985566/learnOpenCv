@@ -331,12 +331,28 @@ public class ImageProcessUtils {
 
     private static void getGradientProcess(String command) {
         if (OpenCVConstants.GRADIENT_SOBEL_X_NAME.equals(command)) {
-            Imgproc.Sobel(sSrc, sDst, -1, 1, 0);
+            Imgproc.Sobel(sSrc, sDst, CvType.CV_16S, 1, 0);
         } else if (OpenCVConstants.GRADIENT_SOBEL_Y_NAME.equals(command)) {
-            Imgproc.Sobel(sSrc, sDst, -1, 0, 1);
-        } else if (OpenCVConstants.GRADIENT_IMG_NAME.equals(command)) {
-            Imgproc.Sobel(sSrc, sDst, -1, 1, 0);
-            Imgproc.Sobel(sDst, sDst, -1, 0, 1);
+            Imgproc.Sobel(sSrc, sDst, CvType.CV_16S, 0, 1);
         }
     }
+
+    public static void gradientXY(Bitmap bitmap) {
+        Mat xGrad = new Mat();
+        Mat yGrad = new Mat();
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.Sobel(sSrc, xGrad, CvType.CV_16S, 0, 1);
+        Imgproc.Sobel(sSrc, yGrad, CvType.CV_16S, 0, 1);
+        Core.convertScaleAbs(xGrad, xGrad);
+        Core.convertScaleAbs(yGrad, yGrad);
+        Core.addWeighted(xGrad, 0.5, yGrad, 0.5, 30, sDst);
+        org.opencv.android.Utils.matToBitmap(sDst, bitmap);
+        xGrad.release();
+        yGrad.release();
+        sSrc.release();
+        sDst.release();
+    }
+
+
 }
