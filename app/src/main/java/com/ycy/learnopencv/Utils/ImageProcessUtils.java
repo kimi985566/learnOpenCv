@@ -294,7 +294,7 @@ public class ImageProcessUtils {
         org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
         Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);
         Imgproc.adaptiveThreshold(sSrc, sDst, 255, getAdaptiveThreshold(command),
-                Imgproc.THRESH_BINARY, 19, 0.0);
+                Imgproc.THRESH_BINARY, 109, 0.0);
         org.opencv.android.Utils.matToBitmap(sDst, bitmap);
         sSrc.release();
         sDst.release();
@@ -308,5 +308,14 @@ public class ImageProcessUtils {
         } else {
             return Imgproc.ADAPTIVE_THRESH_MEAN_C;
         }
+    }
+
+    public static void histogramEq(Bitmap bitmap) {
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.equalizeHist(sSrc, sDst);
+        org.opencv.android.Utils.matToBitmap(sDst, bitmap);
+        sSrc.release();
+        sDst.release();
     }
 }

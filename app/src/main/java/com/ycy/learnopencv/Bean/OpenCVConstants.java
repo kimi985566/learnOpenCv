@@ -35,8 +35,8 @@ public interface OpenCVConstants {
     String BOX_BLUR_IMAGE_COM = "Blur learning: Box Blur";
 
     //高斯滤波
-    String GAUSSIAN_BLUR_IMAGE_NAME = "GAUSSIAN Blur";
-    String GAUSSIAN_BLUR_IMAGE_COM = "Blur learning: GAUSSIAN Blur";
+    String GAUSSIAN_BLUR_IMAGE_NAME = "Gaussian Blur";
+    String GAUSSIAN_BLUR_IMAGE_COM = "Blur learning: Gaussian Blur";
 
     //双边滤波
     String BILATERAL_BLUR_IMAGE_NAME = "Bilateral Blur";
@@ -72,7 +72,7 @@ public interface OpenCVConstants {
 
     //形态学直线检测
     String MORPH_LINE_OPERATION_NAME = "Line Detection";
-    String MORPH_LINE_OPERATION_COM = "形态学直线检测";
+    String MORPH_LINE_OPERATION_COM = "Line Detection";
 
     //阈值二值化
     String THRESH_BINARY_NAME = "Thresh Binary";
@@ -99,6 +99,10 @@ public interface OpenCVConstants {
     String ADAPTIVE_THRESH_MEAN_COM = "Adaptive Thresh Mean Operation";
 
     //自适应阈值
-    String ADAPTIVE_THRESH_GAUSSIAN_NAME = "Adaptive Thresh:GAUSSIAN";
+    String ADAPTIVE_THRESH_GAUSSIAN_NAME = "Adaptive Thresh:Gaussian";
     String ADAPTIVE_THRESH_GAUSSIAN_COM = "Adaptive Thresh Gaussian Operation";
+
+    //直方图均衡化
+    String HISTOGRAM_EQ_NAME = "Histogram EQ";
+    String HISTOGRAM_EQ_COM = "Histogram EQ Operation";
 }

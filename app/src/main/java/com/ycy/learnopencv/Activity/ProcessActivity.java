@@ -117,6 +117,8 @@ public class ProcessActivity extends AppCompatActivity {
         } else if (OpenCVConstants.ADAPTIVE_THRESH_MEAN_NAME.equals(processName)
                 || OpenCVConstants.ADAPTIVE_THRESH_GAUSSIAN_NAME.equals(processName)) {
             ImageProcessUtils.adaptiveThresholdImg(processName, temp);
+        } else if (OpenCVConstants.HISTOGRAM_EQ_NAME.equals(processName)) {
+            ImageProcessUtils.histogramEq(temp);
         }
         mIvProcess.setImageBitmap(temp);
     }
