@@ -318,4 +318,25 @@ public class ImageProcessUtils {
         sSrc.release();
         sDst.release();
     }
+
+    public static void gradientProcess(String command, Bitmap bitmap) {
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);
+        getGradientProcess(command);
+        Core.convertScaleAbs(sDst, sDst);
+        org.opencv.android.Utils.matToBitmap(sDst, bitmap);
+        sSrc.release();
+        sDst.release();
+    }
+
+    private static void getGradientProcess(String command) {
+        if (OpenCVConstants.GRADIENT_SOBEL_X_NAME.equals(command)) {
+            Imgproc.Sobel(sSrc, sDst, -1, 1, 0);
+        } else if (OpenCVConstants.GRADIENT_SOBEL_Y_NAME.equals(command)) {
+            Imgproc.Sobel(sSrc, sDst, -1, 0, 1);
+        } else if (OpenCVConstants.GRADIENT_IMG_NAME.equals(command)) {
+            Imgproc.Sobel(sSrc, sDst, -1, 1, 0);
+            Imgproc.Sobel(sDst, sDst, -1, 0, 1);
+        }
+    }
 }

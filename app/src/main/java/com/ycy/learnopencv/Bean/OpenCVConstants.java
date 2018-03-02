@@ -105,4 +105,16 @@ public interface OpenCVConstants {
     //直方图均衡化
     String HISTOGRAM_EQ_NAME = "Histogram EQ";
     String HISTOGRAM_EQ_COM = "Histogram EQ Operation";
+
+    //图像梯度：Sobel算子X方向
+    String GRADIENT_SOBEL_X_NAME = "Gradient Sobel X";
+    String GRADIENT_SOBEL_X_COM = "Gradient Sobel X";
+
+    //图像梯度：Sobel算子Y方向
+    String GRADIENT_SOBEL_Y_NAME = "Gradient Sobel Y";
+    String GRADIENT_SOBEL_Y_COM = "Gradient Sobel Y";
+
+    //图像梯度
+    String GRADIENT_IMG_NAME = "Gradient image";
+    String GRADIENT_IMG_COM = "Gradient image";
 }

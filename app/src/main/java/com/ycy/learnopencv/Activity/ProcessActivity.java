@@ -119,6 +119,10 @@ public class ProcessActivity extends AppCompatActivity {
             ImageProcessUtils.adaptiveThresholdImg(processName, temp);
         } else if (OpenCVConstants.HISTOGRAM_EQ_NAME.equals(processName)) {
             ImageProcessUtils.histogramEq(temp);
+        } else if (OpenCVConstants.GRADIENT_SOBEL_X_NAME.equals(processName)
+                || OpenCVConstants.GRADIENT_SOBEL_Y_NAME.equals(processName)
+                || OpenCVConstants.GRADIENT_IMG_NAME.equals(processName)) {
+            ImageProcessUtils.gradientProcess(processName, temp);
         }
         mIvProcess.setImageBitmap(temp);
     }

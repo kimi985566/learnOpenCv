@@ -76,7 +76,9 @@ public class OpenCVInfo implements OpenCVConstants {
         list.add(new OpenCVInfo(22, MANUAL_THRESH_NAME, MANUAL_THRESH_COM));
         list.add(new OpenCVInfo(23, ADAPTIVE_THRESH_MEAN_NAME, ADAPTIVE_THRESH_MEAN_COM));
         list.add(new OpenCVInfo(24, HISTOGRAM_EQ_NAME, HISTOGRAM_EQ_COM));
-
+        list.add(new OpenCVInfo(25, GRADIENT_SOBEL_X_NAME, GRADIENT_SOBEL_X_COM));
+        list.add(new OpenCVInfo(26, GRADIENT_SOBEL_Y_NAME, GRADIENT_SOBEL_Y_COM));
+        list.add(new OpenCVInfo(27, GRADIENT_IMG_NAME, GRADIENT_IMG_COM));
         return list;
     }
 }
