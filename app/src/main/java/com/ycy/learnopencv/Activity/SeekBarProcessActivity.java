@@ -15,6 +15,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.Utils;
+import com.ycy.learnopencv.Bean.OpenCVConstants;
 import com.ycy.learnopencv.R;
 import com.ycy.learnopencv.Utils.ImageProcessUtils;
 
@@ -25,7 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ThreshHoldProcessActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener {
+public class SeekBarProcessActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -49,7 +50,7 @@ public class ThreshHoldProcessActivity extends AppCompatActivity implements Seek
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_thresh_hold_process);
+        setContentView(R.layout.activity_seek_bar_process);
         ButterKnife.bind(this);
         Utils.init(this);
         processName = this.getIntent().getStringExtra("name");
@@ -87,7 +88,11 @@ public class ThreshHoldProcessActivity extends AppCompatActivity implements Seek
     private void select2Process(int value) {
         Bitmap temp = mBitmap.copy(mBitmap.getConfig(), true);
         //TODO:Process
-        ImageProcessUtils.manualThresholdImg(value, temp);
+        if (OpenCVConstants.MANUAL_THRESH_NAME.equals(processName)) {
+            ImageProcessUtils.manualThresholdImg(value, temp);
+        } else if (OpenCVConstants.CANNY_NAME.equals(processName)) {
+            ImageProcessUtils.cannyProcess(value, temp);
+        }
         mIvThreshProcess.setImageBitmap(temp);
     }
 

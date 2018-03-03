@@ -125,6 +125,7 @@ public class ProcessActivity extends AppCompatActivity {
         } else if (OpenCVConstants.GRADIENT_IMG_NAME.equals(processName)) {
             ImageProcessUtils.gradientXY(temp);
         }
+
         mIvProcess.setImageBitmap(temp);
     }
 

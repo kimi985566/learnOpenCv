@@ -35,7 +35,7 @@
                 android:value=".Activity.MainActivity"/>
         </activity>
         <activity
-            android:name=".Activity.ThreshHoldProcessActivity"
+            android:name=".Activity.SeekBarProcessActivity"
             android:label="@string/title_activity_thresh_hold_process"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

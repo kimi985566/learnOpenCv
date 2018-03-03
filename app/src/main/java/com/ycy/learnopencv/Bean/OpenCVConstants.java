@@ -117,4 +117,8 @@ public interface OpenCVConstants {
     //图像梯度
     String GRADIENT_IMG_NAME = "Gradient image";
     String GRADIENT_IMG_COM = "Gradient image";
+
+    //边缘提取
+    String CANNY_NAME = "Canny Edge";
+    String CANNY_COM = "Canny Edge";
 }
