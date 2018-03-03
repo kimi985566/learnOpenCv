@@ -359,6 +359,7 @@ public class ImageProcessUtils {
         Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);
         Imgproc.Canny(sSrc, sDst, value, value * 2, 3, false);
         Core.convertScaleAbs(sDst, sDst);
+        Imgproc.threshold(sDst, sDst, 0, 255, Imgproc.THRESH_BINARY_INV);
         org.opencv.android.Utils.matToBitmap(sDst, bitmap);
         sSrc.release();
         sDst.release();
