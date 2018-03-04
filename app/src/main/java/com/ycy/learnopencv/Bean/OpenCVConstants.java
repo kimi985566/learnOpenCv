@@ -122,5 +122,7 @@ public interface OpenCVConstants {
     String CANNY_NAME = "Canny Edge";
     String CANNY_COM = "Canny Edge";
 
-
+    //模板匹配
+    String TEMPLATE_MATCH_NAME = "Template Match";
+    String TEMPLATE_MATCH_COM = "Template Match";
 }

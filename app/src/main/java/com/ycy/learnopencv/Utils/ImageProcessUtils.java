@@ -23,6 +23,7 @@ public class ImageProcessUtils {
     private static Mat sDst = new Mat();
     private static Mat sKernel;
     private static Mat sStrElement;
+    private static Mat sResult;
 
     private static int sWidth; //width
     private static int sHeight;  //height
@@ -364,6 +365,33 @@ public class ImageProcessUtils {
         org.opencv.android.Utils.matToBitmap(sDst, bitmap);
         sSrc.release();
         sDst.release();
+    }
+
+    public static void templateMatch(Bitmap tpl, Bitmap bitmap) {
+
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        org.opencv.android.Utils.bitmapToMat(tpl, sDst);
+
+        sWidth = (bitmap.getWidth() - tpl.getWidth() + 1);
+        sHeight = (bitmap.getHeight() - tpl.getHeight() + 1);
+
+        sResult = new Mat(sWidth, sHeight, CvType.CV_32FC1);
+
+        Imgproc.matchTemplate(sSrc, sDst, sResult, Imgproc.TM_CCOEFF_NORMED);
+        Core.normalize(sResult, sResult, 0, 1.0,
+                Core.NORM_MINMAX, -1, new Mat());
+        Core.MinMaxLocResult minMaxLocResult = Core.minMaxLoc(sResult);
+        Point point = minMaxLocResult.maxLoc;
+
+        Imgproc.rectangle(sSrc, point,
+                new Point(point.x + tpl.getWidth(), point.y + tpl.getHeight()),
+                new Scalar(0, 255, 0, 0), 5, 8, 0);
+
+        org.opencv.android.Utils.matToBitmap(sSrc, bitmap);
+
+        sSrc.release();
+        sDst.release();
+        sResult.release();
     }
 
 }

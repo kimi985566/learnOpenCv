@@ -50,7 +50,10 @@ public class ProcessActivity extends AppCompatActivity {
         mBtnProcess.setText(processName);
         actionBarSetting();
 
-        mBitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_image_aboutme);
+        mBitmap = BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.ic_image_template_test);
+
+        mIvProcess.setImageBitmap(mBitmap);
     }
 
     private void actionBarSetting() {
@@ -124,6 +127,10 @@ public class ProcessActivity extends AppCompatActivity {
             ImageProcessUtils.gradientProcess(processName, temp);
         } else if (OpenCVConstants.GRADIENT_IMG_NAME.equals(processName)) {
             ImageProcessUtils.gradientXY(temp);
+        } else if (OpenCVConstants.TEMPLATE_MATCH_NAME.equals(processName)) {
+            Bitmap tpl = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.ic_image_template_sample);
+            ImageProcessUtils.templateMatch(tpl, temp);
         }
 
         mIvProcess.setImageBitmap(temp);

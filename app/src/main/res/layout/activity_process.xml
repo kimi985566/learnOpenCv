@@ -37,5 +37,5 @@
         android:layout_margin="10dp"
         android:autofillHints="Select a image first"
         android:padding="10dp"
-        android:src="@drawable/ic_image_aboutme"/>
+        android:src="@drawable/ic_image_calligraphy_test"/>
 </LinearLayout>
