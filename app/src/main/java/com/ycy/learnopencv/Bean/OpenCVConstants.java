@@ -125,4 +125,8 @@ public interface OpenCVConstants {
     //模板匹配
     String TEMPLATE_MATCH_NAME = "Template Match";
     String TEMPLATE_MATCH_COM = "Template Match";
+
+    //轮廓发现
+    String FIND_CONTOURS_NAME = "Find Contours";
+    String FIND_CONTOURS_COM = "Find Contours";
 }
