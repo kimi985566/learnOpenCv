@@ -31,9 +31,9 @@ public class SeekBarProcessActivity extends AppCompatActivity implements SeekBar
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.btn_thresh_select)
-    Button mBtnThreshSelect;
+    Button mBtnSelect;
     @BindView(R.id.btn_thresh_process)
-    Button mBtnThreshProcess;
+    Button mBtnProcess;
     @BindView(R.id.thresh_seek_bar)
     SeekBar mThreshSeekBar;
     @BindView(R.id.iv_thresh_process)
@@ -55,7 +55,7 @@ public class SeekBarProcessActivity extends AppCompatActivity implements SeekBar
         Utils.init(this);
         processName = this.getIntent().getStringExtra("name");
         actionBarSetting();
-        mBtnThreshProcess.setText(processName);
+        mBtnProcess.setText(processName);
         mBitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_image_aboutme);
         mThreshSeekBar.setOnSeekBarChangeListener(this);
     }
@@ -87,11 +87,12 @@ public class SeekBarProcessActivity extends AppCompatActivity implements SeekBar
 
     private void select2Process(int value) {
         Bitmap temp = mBitmap.copy(mBitmap.getConfig(), true);
-        //TODO:Process
         if (OpenCVConstants.MANUAL_THRESH_NAME.equals(processName)) {
             ImageProcessUtils.manualThresholdImg(value, temp);
         } else if (OpenCVConstants.CANNY_NAME.equals(processName)) {
             ImageProcessUtils.cannyProcess(value, temp);
+        } else if (OpenCVConstants.FIND_CONTOURS_NAME.equals(processName)) {
+            ImageProcessUtils.findAndDrawContours(value, temp);
         }
         mIvThreshProcess.setImageBitmap(temp);
     }

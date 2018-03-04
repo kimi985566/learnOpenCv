@@ -81,6 +81,7 @@ public class OpenCVInfo implements OpenCVConstants {
         list.add(new OpenCVInfo(27, GRADIENT_IMG_NAME, GRADIENT_IMG_COM));
         list.add(new OpenCVInfo(28, CANNY_NAME, CANNY_COM));
         list.add(new OpenCVInfo(29, TEMPLATE_MATCH_NAME, TEMPLATE_MATCH_COM));
+        list.add(new OpenCVInfo(30, FIND_CONTOURS_NAME, FIND_CONTOURS_COM));
 
         return list;
     }

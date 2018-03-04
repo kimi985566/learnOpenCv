@@ -7,11 +7,15 @@ import com.ycy.learnopencv.Bean.OpenCVConstants;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kimi9 on 2018/2/23.
@@ -393,5 +397,26 @@ public class ImageProcessUtils {
         sDst.release();
         sResult.release();
     }
+
+    public static void findAndDrawContours(int value, Bitmap bitmap) {
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.Canny(sSrc, sDst, value, value * 2, 3, false);
+        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+        sKernel=new Mat();
+        Imgproc.findContours(sDst, contours, sKernel, Imgproc.RETR_TREE,
+                Imgproc.CHAIN_APPROX_SIMPLE, new Point(0, 0));
+        Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_GRAY2BGR);
+        for (int i = 0; i < contours.size(); i++) {
+            MatOfPoint matOfPoint = contours.get(i);
+            Imgproc.drawContours(sSrc, contours, i, new Scalar(255, 0, 0),
+                    2, 8, sKernel, 0, new Point(0, 0));
+        }
+        org.opencv.android.Utils.matToBitmap(sSrc, bitmap);
+        sSrc.release();
+        sDst.release();
+        sKernel.release();
+    }
+
 
 }
