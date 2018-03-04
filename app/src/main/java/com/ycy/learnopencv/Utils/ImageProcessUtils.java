@@ -356,6 +356,7 @@ public class ImageProcessUtils {
 
     public static void cannyProcess(int value, Bitmap bitmap) {
         org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        Imgproc.GaussianBlur(sSrc, sSrc, new Size(3, 3), 0, 0, 4);
         Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);
         Imgproc.Canny(sSrc, sDst, value, value * 2, 3, false);
         Core.convertScaleAbs(sDst, sDst);
@@ -364,6 +365,5 @@ public class ImageProcessUtils {
         sSrc.release();
         sDst.release();
     }
-
 
 }

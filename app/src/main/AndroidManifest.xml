@@ -37,7 +37,11 @@
         <activity
             android:name=".Activity.SeekBarProcessActivity"
             android:label="@string/title_activity_thresh_hold_process"
+            android:parentActivityName=".Activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activity.MainActivity"/>
         </activity>
     </application>
 
