@@ -93,6 +93,8 @@ public class SeekBarProcessActivity extends AppCompatActivity implements SeekBar
             ImageProcessUtils.cannyProcess(value, temp);
         } else if (OpenCVConstants.FIND_CONTOURS_NAME.equals(processName)) {
             ImageProcessUtils.findAndDrawContours(value, temp);
+        } else if (OpenCVConstants.FIND_OBJECTS_NAME.equals(processName)) {
+            ImageProcessUtils.findObjects(value, temp);
         }
         mIvThreshProcess.setImageBitmap(temp);
     }

@@ -8,11 +8,13 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.imgproc.Moments;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -403,7 +405,7 @@ public class ImageProcessUtils {
         Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);
         Imgproc.Canny(sSrc, sDst, value, value * 2, 3, false);
         List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-        sKernel=new Mat();
+        sKernel = new Mat();
         Imgproc.findContours(sDst, contours, sKernel, Imgproc.RETR_TREE,
                 Imgproc.CHAIN_APPROX_SIMPLE, new Point(0, 0));
         Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_GRAY2BGR);
@@ -418,5 +420,34 @@ public class ImageProcessUtils {
         sKernel.release();
     }
 
+    public static void findObjects(int value, Bitmap bitmap) {
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.Canny(sSrc, sDst, value, value * 2, 3, false);
+        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+        sKernel = new Mat();
+        Imgproc.findContours(sDst, contours, sKernel, Imgproc.RETR_TREE,
+                Imgproc.CHAIN_APPROX_SIMPLE, new Point(0, 0));
+        Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_GRAY2BGR);
+        double[][] results = new double[contours.size()][2];
+        for (int i = 0; i < contours.size(); i++) {
+            Moments moments = Imgproc.moments(contours.get(i), false);
+            double m00 = moments.get_m00();
+            double m10 = moments.get_m10();
+            double m01 = moments.get_m01();
+            double x0 = m10 / m00;
+            double y0 = m01 / m00;
+            double arcLength = Imgproc.arcLength(new MatOfPoint2f(contours.get(i).toArray()), true);
+            double area = Imgproc.contourArea(contours.get(i));
+            results[i][0] = arcLength;
+            results[i][1] = area;
+            Imgproc.circle(sSrc,new Point(x0,y0),2,new Scalar(255,0,0),2,4,0);
+
+        }
+        org.opencv.android.Utils.matToBitmap(sSrc, bitmap);
+        sSrc.release();
+        sDst.release();
+        sKernel.release();
+    }
 
 }

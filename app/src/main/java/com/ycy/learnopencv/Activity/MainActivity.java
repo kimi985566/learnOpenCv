@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     private void processIntent() {
         if (OpenCVConstants.MANUAL_THRESH_NAME.equals(mProcessName)
                 || OpenCVConstants.CANNY_NAME.equals(mProcessName)
-                || OpenCVConstants.FIND_CONTOURS_NAME.equals(mProcessName)) {
+                || OpenCVConstants.FIND_CONTOURS_NAME.equals(mProcessName)
+                || OpenCVConstants.FIND_OBJECTS_NAME.equals(mProcessName)) {
             Intent intent = new Intent(MainActivity.this, SeekBarProcessActivity.class);
             intent.putExtra("commend", mProcessCMD);
             intent.putExtra("name", mProcessName);
