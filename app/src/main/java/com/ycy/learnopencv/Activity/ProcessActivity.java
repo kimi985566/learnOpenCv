@@ -165,6 +165,8 @@ public class ProcessActivity extends AppCompatActivity {
             ImageProcessUtils.templateMatch(tpl, temp);
         } else if (OpenCVConstants.FIND_FACE_NAME.equals(processName)) {
             ImageProcessUtils.faceDetector(temp, mFaceDetector);
+        } else if (OpenCVConstants.SKELETON_PROCESS_NAME.equals(processName)) {
+            ImageProcessUtils.skeletonProcess(temp);
         }
 
         mIvProcess.setImageBitmap(temp);

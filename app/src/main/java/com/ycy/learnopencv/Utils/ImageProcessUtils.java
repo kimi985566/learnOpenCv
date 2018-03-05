@@ -470,4 +470,36 @@ public class ImageProcessUtils {
         sDst.release();
     }
 
+    public static void skeletonProcess(Bitmap bitmap) {
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);//convert Bitmap to mat
+        Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.threshold(sSrc, sSrc, 0, 255,
+                Imgproc.THRESH_BINARY_INV | Imgproc.THRESH_OTSU);
+        sDst = sSrc.clone();
+
+        int K = 0;//腐蚀至消失的次数
+        Mat element = Imgproc.getStructuringElement(Imgproc.MORPH_CROSS, new Size(3, 3));
+        do {
+            Mat dst2 = new Mat();
+            Imgproc.morphologyEx(sDst, dst2, Imgproc.MORPH_OPEN, element);//图像开操作
+            Mat tmp = new Mat();
+            Core.subtract(sDst, dst2, tmp);//图像减操作
+            if (sResult == null) {
+                sResult = tmp;
+            } else {
+                Core.add(tmp, sResult, sResult);//图像加操作
+            }
+            K++;
+            Imgproc.erode(sSrc, sDst, element, new Point(-1, -1), K);//图像腐蚀
+        } while (Core.countNonZero(sDst) > 0);
+
+        Imgproc.threshold(sResult, sResult, 0, 255,
+                Imgproc.THRESH_BINARY_INV | Imgproc.THRESH_OTSU);
+        org.opencv.android.Utils.matToBitmap(sResult, bitmap);
+        element.release();
+        sResult.release();
+        sSrc.release();
+        sDst.release();
+    }
+
 }

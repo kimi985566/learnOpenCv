@@ -137,4 +137,8 @@ public interface OpenCVConstants {
     //人脸识别
     String FIND_FACE_NAME = "Find Face";
     String FIND_FACE_COM = "Find Face";
+
+    //骨架化操作
+    String SKELETON_PROCESS_NAME="Skeleton";
+    String SKELETON_PROCESS_COM="Skeleton";
 }
