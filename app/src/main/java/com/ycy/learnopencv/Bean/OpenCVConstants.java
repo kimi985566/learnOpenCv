@@ -130,7 +130,11 @@ public interface OpenCVConstants {
     String FIND_CONTOURS_NAME = "Find Contours";
     String FIND_CONTOURS_COM = "Find Contours";
 
-    //轮廓发现
+    //中心发现
     String FIND_OBJECTS_NAME = "Find Objects";
     String FIND_OBJECTS_COM = "Find Objects";
+
+    //人脸识别
+    String FIND_FACE_NAME = "Find Face";
+    String FIND_FACE_COM = "Find Face";
 }

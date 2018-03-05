@@ -9,12 +9,14 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
+import org.opencv.objdetect.CascadeClassifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -441,13 +443,31 @@ public class ImageProcessUtils {
             double area = Imgproc.contourArea(contours.get(i));
             results[i][0] = arcLength;
             results[i][1] = area;
-            Imgproc.circle(sSrc,new Point(x0,y0),2,new Scalar(255,0,0),2,4,0);
+            Imgproc.circle(sSrc, new Point(x0, y0), 2, new Scalar(255, 0, 0), 2, 4, 0);
 
         }
         org.opencv.android.Utils.matToBitmap(sSrc, bitmap);
         sSrc.release();
         sDst.release();
         sKernel.release();
+    }
+
+    public static void faceDetector(Bitmap bitmap, CascadeClassifier detector) {
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);//convert Bitmap to mat
+        Imgproc.cvtColor(sSrc, sDst, Imgproc.COLOR_BGRA2GRAY);
+        MatOfRect faces = new MatOfRect();
+        detector.detectMultiScale(sDst, faces, 1.1, 15, 0,
+                new Size(50, 50), new Size());
+        List<Rect> faceList = faces.toList();
+        if (faceList.size() > 0) {
+            for (Rect rect : faceList) {
+                Imgproc.rectangle(sSrc, rect.tl(), rect.br(),
+                        new Scalar(0, 255, 0, 255), 2, 8, 0);
+            }
+        }
+        org.opencv.android.Utils.matToBitmap(sSrc, bitmap);
+        sSrc.release();
+        sDst.release();
     }
 
 }

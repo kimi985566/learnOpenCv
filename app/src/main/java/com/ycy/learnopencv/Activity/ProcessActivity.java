@@ -1,5 +1,6 @@
 package com.ycy.learnopencv.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,7 +18,12 @@ import com.ycy.learnopencv.Bean.OpenCVConstants;
 import com.ycy.learnopencv.R;
 import com.ycy.learnopencv.Utils.ImageProcessUtils;
 
+import org.opencv.objdetect.CascadeClassifier;
+
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import butterknife.BindView;
@@ -39,6 +45,7 @@ public class ProcessActivity extends AppCompatActivity {
     public static final int SELECT_PIC_RESULT_CODE = 202;
     private int maxSize = 1024;
     private String processName;
+    private CascadeClassifier mFaceDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +57,35 @@ public class ProcessActivity extends AppCompatActivity {
         mBtnProcess.setText(processName);
         actionBarSetting();
 
+        try {
+            initFaceDetector();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         mBitmap = BitmapFactory.decodeResource(this.getResources(),
                 R.drawable.ic_image_template_test);
 
         mIvProcess.setImageBitmap(mBitmap);
+    }
+
+    private void initFaceDetector() throws IOException {
+        InputStream inputStream = getResources().openRawResource(R.raw.lbpcascade_frontalface);
+        File cascadeDir = this.getDir("cascade", Context.MODE_PRIVATE);
+        File file = new File(cascadeDir.getAbsoluteFile(), "lbpcascade_frontalface.xml");
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        byte[] buff = new byte[1024];
+        int len = 0;
+        while ((len = inputStream.read(buff)) != -1) {
+            fileOutputStream.write(buff, 0, len);
+        }
+        inputStream.close();
+        fileOutputStream.close();
+
+        mFaceDetector = new CascadeClassifier(file.getAbsolutePath());
+
+        file.delete();
+        cascadeDir.delete();
     }
 
     private void actionBarSetting() {
@@ -131,6 +163,8 @@ public class ProcessActivity extends AppCompatActivity {
             Bitmap tpl = BitmapFactory.decodeResource(this.getResources(),
                     R.drawable.ic_image_template_sample);
             ImageProcessUtils.templateMatch(tpl, temp);
+        } else if (OpenCVConstants.FIND_FACE_NAME.equals(processName)) {
+            ImageProcessUtils.faceDetector(temp, mFaceDetector);
         }
 
         mIvProcess.setImageBitmap(temp);
