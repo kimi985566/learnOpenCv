@@ -84,8 +84,7 @@ public class OpenCVInfo implements OpenCVConstants {
         list.add(new OpenCVInfo(30, FIND_CONTOURS_NAME, FIND_CONTOURS_COM));
         list.add(new OpenCVInfo(31, FIND_OBJECTS_NAME, FIND_OBJECTS_COM));
         list.add(new OpenCVInfo(32, FIND_FACE_NAME, FIND_FACE_COM));
-        list.add(new OpenCVInfo(33, FIND_FACE_NAME, FIND_FACE_COM));
-        list.add(new OpenCVInfo(34, SKELETON_PROCESS_NAME, SKELETON_PROCESS_COM));
+        list.add(new OpenCVInfo(33, SKELETON_PROCESS_NAME, SKELETON_PROCESS_COM));
 
         return list;
     }

@@ -47,6 +47,7 @@ public class ImageProcessUtils {
     private static int sB = 0;
 
     private static int[] sPixels;
+    private static int[] pStore;
 
     public static Bitmap covert2Gray(Bitmap bitmap) {
         org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);//convert Bitmap to mat
@@ -471,17 +472,19 @@ public class ImageProcessUtils {
     }
 
     public static void skeletonProcess(Bitmap bitmap) {
+
         org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);//convert Bitmap to mat
-        Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);//灰度处理
         Imgproc.threshold(sSrc, sSrc, 0, 255,
-                Imgproc.THRESH_BINARY_INV | Imgproc.THRESH_OTSU);
+                Imgproc.THRESH_BINARY_INV | Imgproc.THRESH_OTSU);//二值化
         sDst = sSrc.clone();
 
+        sStrElement = Imgproc.getStructuringElement(Imgproc.MORPH_CROSS, new Size(3, 3));
+        sResult = null;
         int K = 0;//腐蚀至消失的次数
-        Mat element = Imgproc.getStructuringElement(Imgproc.MORPH_CROSS, new Size(3, 3));
         do {
             Mat dst2 = new Mat();
-            Imgproc.morphologyEx(sDst, dst2, Imgproc.MORPH_OPEN, element);//图像开操作
+            Imgproc.morphologyEx(sDst, dst2, Imgproc.MORPH_OPEN, sStrElement);//图像开操作
             Mat tmp = new Mat();
             Core.subtract(sDst, dst2, tmp);//图像减操作
             if (sResult == null) {
@@ -490,16 +493,59 @@ public class ImageProcessUtils {
                 Core.add(tmp, sResult, sResult);//图像加操作
             }
             K++;
-            Imgproc.erode(sSrc, sDst, element, new Point(-1, -1), K);//图像腐蚀
+            Imgproc.erode(sSrc, sDst, sStrElement, new Point(-1, -1), K);//图像腐蚀
         } while (Core.countNonZero(sDst) > 0);
 
         Imgproc.threshold(sResult, sResult, 0, 255,
                 Imgproc.THRESH_BINARY_INV | Imgproc.THRESH_OTSU);
+
         org.opencv.android.Utils.matToBitmap(sResult, bitmap);
-        element.release();
-        sResult.release();
+
         sSrc.release();
         sDst.release();
+        sResult.release();
     }
 
+    public static void MyskeletonProcess(Bitmap bitmap, int value) {
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.threshold(sSrc, sSrc, 0, 255,
+                Imgproc.THRESH_BINARY_INV | Imgproc.THRESH_OTSU);
+
+        Mat ske = new Mat(sSrc.size(), CvType.CV_8UC1, new Scalar(0, 0, 0));
+        Mat temp = new Mat(sSrc.size(), CvType.CV_8UC1);
+        Mat erode = new Mat();
+
+        sStrElement = Imgproc.getStructuringElement(Imgproc.MORPH_CROSS, new Size(3, 3));
+
+        boolean done;
+        do {
+            Imgproc.erode(sSrc, erode, sStrElement);
+            Imgproc.dilate(erode, temp, sStrElement);
+            Core.subtract(sSrc, temp, temp);
+            Core.bitwise_or(ske, temp, ske);
+            erode.copyTo(sSrc);
+
+            done = (Core.countNonZero(sSrc) == 0);
+
+
+//            Imgproc.morphologyEx(sSrc, temp, Imgproc.MORPH_OPEN, sStrElement);
+//            Core.bitwise_not(temp, temp);
+//            Core.bitwise_and(sSrc, temp, temp);
+//            Core.bitwise_or(ske, temp, ske);
+//            Imgproc.erode(sSrc, sSrc, sStrElement);
+        } while (!done);
+
+        Imgproc.GaussianBlur(ske, ske, new Size(5, 5), 0, 0, 4);
+        Imgproc.threshold(ske, ske, 0, 255,
+                Imgproc.THRESH_BINARY_INV | Imgproc.THRESH_OTSU);
+        org.opencv.android.Utils.matToBitmap(ske, bitmap);
+
+        ske.release();
+        temp.release();
+        erode.release();
+        sStrElement.release();
+        sSrc.release();
+
+    }
 }
