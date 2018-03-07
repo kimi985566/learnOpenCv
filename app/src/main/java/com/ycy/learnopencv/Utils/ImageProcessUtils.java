@@ -48,6 +48,7 @@ public class ImageProcessUtils {
 
     private static int[] sPixels;
     private static int[] pStore;
+    private static int[] sOriginal;
 
     public static Bitmap covert2Gray(Bitmap bitmap) {
         org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);//convert Bitmap to mat
@@ -547,5 +548,165 @@ public class ImageProcessUtils {
         sStrElement.release();
         sSrc.release();
 
+    }
+
+
+    public static Bitmap thinning(Bitmap bitmap) {
+
+        org.opencv.android.Utils.bitmapToMat(bitmap, sSrc);
+        Imgproc.cvtColor(sSrc, sSrc, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.threshold(sSrc, sSrc, 0, 255,
+                Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU);
+        org.opencv.android.Utils.matToBitmap(sSrc, bitmap);
+
+        sWidth = bitmap.getWidth();
+        sHeight = bitmap.getHeight();
+
+        sOriginal = new int[sWidth * sHeight];
+        sPixels = new int[sWidth * sHeight];
+
+        bitmap.getPixels(sPixels, 0, sWidth, 0, 0, sWidth, sHeight);
+
+        int[][] neighbour = new int[5][5];
+        int nCount = 0, i, j, m, n, kkk = 0;
+
+
+        pStore = new int[sWidth * sHeight];
+
+        for (i = 0; i < sWidth; i++)  //将pStore清空为白色
+            for (j = 0; j < sHeight; j++) {
+                pStore[i + j * sWidth] = 255;
+            }
+
+
+        Boolean bModified = Boolean.TRUE;//脏标记
+
+        Boolean bCondition1, bCondition2, bCondition3, bCondition4;//四个标记
+
+        while (bModified) {
+            bModified = Boolean.FALSE;
+
+            for (j = 0; j < sHeight; j++) {
+                for (i = 0; i < sWidth; i++) {
+                    bCondition1 = Boolean.FALSE;
+                    bCondition2 = Boolean.FALSE;
+                    bCondition3 = Boolean.FALSE;
+                    bCondition4 = Boolean.FALSE;
+
+                    if (sPixels[i + j * sWidth] == 255)
+                        continue; //白色点，跳过
+
+                    //获得当前4*4领域象素值， 1为黑色，0为白色
+                    for (m = 0; m < 5; m++)
+                        for (n = 0; n < 5; n++) {
+                            if (i + n - 2 < 0 || i + n - 2 > sWidth - 1 || j + m - 2 < 0 || j + m - 2 > sHeight - 1)//若出界，则界外为白色
+                                neighbour[m][n] = 0;  //0 表示该邻域为背景色
+                            else
+
+                                neighbour[m][n] = (int) ((255 - sPixels[i + n - 2 + (j + m - 2) * sWidth]) / 255);
+
+                        }
+
+                    //判断2<=NZ(P1)<=6
+                    nCount = neighbour[1][1] + neighbour[1][2] + neighbour[1][3]
+                            + neighbour[2][1] + neighbour[2][3]
+                            + neighbour[3][1] + neighbour[3][2] + neighbour[3][3];
+
+                    if (nCount >= 2 && nCount <= 6)
+                        bCondition1 = Boolean.TRUE;
+
+                    //判断Z0(P1)=1
+                    nCount = 0;
+                    if (neighbour[1][2] == 0 && neighbour[1][1] == 1)
+                        nCount++;
+                    if (neighbour[1][1] == 0 && neighbour[2][1] == 1)
+                        nCount++;
+                    if (neighbour[2][1] == 0 && neighbour[3][1] == 1)
+                        nCount++;
+                    if (neighbour[3][1] == 0 && neighbour[3][2] == 1)
+                        nCount++;
+                    if (neighbour[3][2] == 0 && neighbour[3][3] == 1)
+                        nCount++;
+                    if (neighbour[3][3] == 0 && neighbour[2][3] == 1)
+                        nCount++;
+                    if (neighbour[2][3] == 0 && neighbour[1][3] == 1)
+                        nCount++;
+                    if (neighbour[1][3] == 0 && neighbour[1][2] == 1)
+                        nCount++;
+                    if (nCount == 1)
+                        bCondition2 = Boolean.TRUE;
+
+                    //判断P2*P4*p8=0 or Z0(p2)!=1
+                    if (neighbour[1][2] * neighbour[2][1] * neighbour[2][3] == 0)
+                        bCondition3 = Boolean.TRUE;
+
+                    else {
+                        nCount = 0;
+                        if (neighbour[0][2] == 0 && neighbour[0][1] == 1)
+                            nCount++;
+                        if (neighbour[0][1] == 0 && neighbour[1][1] == 1)
+                            nCount++;
+                        if (neighbour[1][1] == 0 && neighbour[2][1] == 1)
+                            nCount++;
+                        if (neighbour[2][1] == 0 && neighbour[2][2] == 1)
+                            nCount++;
+                        if (neighbour[2][2] == 0 && neighbour[2][3] == 1)
+                            nCount++;
+                        if (neighbour[2][3] == 0 && neighbour[1][3] == 1)
+                            nCount++;
+                        if (neighbour[1][3] == 0 && neighbour[0][3] == 1)
+                            nCount++;
+                        if (neighbour[0][3] == 0 && neighbour[0][2] == 1)
+                            nCount++;
+                        if (nCount != 1)
+                            bCondition3 = Boolean.TRUE;
+                    }
+                    //判断p2*p3*p6=0 or Z0(p4)!=1
+                    if (neighbour[1][2] * neighbour[2][1] * neighbour[3][2] == 0)
+                        bCondition4 = Boolean.TRUE;
+                    else {
+                        nCount = 0;
+                        if (neighbour[1][1] == 0 && neighbour[1][0] == 1)
+                            nCount++;
+                        if (neighbour[1][0] == 0 && neighbour[2][0] == 1)
+                            nCount++;
+                        if (neighbour[2][0] == 0 && neighbour[3][0] == 1)
+                            nCount++;
+                        if (neighbour[3][0] == 0 && neighbour[3][1] == 1)
+                            nCount++;
+                        if (neighbour[3][1] == 0 && neighbour[3][2] == 1)
+                            nCount++;
+                        if (neighbour[3][2] == 0 && neighbour[2][2] == 1)
+                            nCount++;
+                        if (neighbour[2][2] == 0 && neighbour[1][2] == 1)
+                            nCount++;
+                        if (neighbour[1][2] == 0 && neighbour[1][1] == 1)
+                            nCount++;
+                        if (nCount != 1)
+                            bCondition4 = Boolean.TRUE;
+                    }
+                    if (bCondition1 && bCondition2 && bCondition3 && bCondition4) {
+                        pStore[i + j * sWidth] = 255;
+                        bModified = Boolean.TRUE;
+                    } else
+                        pStore[i + j * sWidth] = 0;
+                }
+
+            }// end for, but haven't check 'bModified'
+
+
+            //存储图像值
+            for (m = 0; m < sHeight; m++)
+                for (n = 0; n < sWidth; n++)
+                    sPixels[n + m * sWidth] = pStore[n + m * sWidth];
+
+
+        }
+
+        bitmap.setPixels(pStore, 0, sWidth, 0, 0, sWidth, sHeight);
+
+        sSrc.release();
+
+        return bitmap;
     }
 }
